@@ -2,13 +2,642 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>新时代的中国外交</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="referrer" content="no-referrer">
+  <meta name="description" content="新时代国际援助中的中国身影：从人类命运共同体、真实亲诚与正确义利观、国际人道主义三条理念，到疫苗、杂交水稻、维和三个现场。">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+  <title>中国式援助的知行合一 · 新时代国际援助中的中国身影</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --canvas: #f3f4f1;
+      --surface: #ffffff;
+      --ink: #171a18;
+      --body: #3b423d;
+      --muted: #6c746e;
+      --line: #dcdfd8;
+      --line-soft: #e8eae4;
+      --accent: #12524c;
+      --accent-soft: #e9f0ec;
+      --sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans SC", "Noto Sans CJK SC", system-ui, sans-serif;
+      --mono: ui-monospace, "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+      --wrap: 1180px;
+      --gap: clamp(20px, 4vw, 48px);
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0; background: var(--canvas); color: var(--body);
+      font: 1rem/1.78 var(--sans);
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, h4 { color: var(--ink); font-weight: 700; margin: 0; letter-spacing: -.015em; }
+    p { margin: 0; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; text-underline-offset: 3px; }
+    button, input, textarea, select { font: inherit; color: inherit; }
+    img { display: block; max-width: 100%; height: auto; }
+    [hidden] { display: none !important; }
+    .wrap { width: min(var(--wrap), 100% - var(--gap) * 2); margin-inline: auto; }
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+    }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    .skip {
+      position: absolute; left: -9999px; top: 0; z-index: 50;
+      background: var(--ink); color: #fff; padding: 10px 16px; font-size: .875rem;
+    }
+    .skip:focus { left: 8px; top: 8px; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      min-height: 44px; padding: 0 20px;
+      border: 1px solid var(--line-soft); border-radius: 0;
+      background: var(--surface); color: var(--ink);
+      font-size: .9375rem; font-weight: 500; line-height: 1.3;
+      cursor: pointer; transition: background-color .18s ease, border-color .18s ease, transform .12s ease;
+    }
+    .btn:hover { border-color: var(--ink); text-decoration: none; }
+    .btn:active { transform: translateY(1px); }
+    .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .btn.primary:hover { background: #0e413c; border-color: #0e413c; }
+
+    /* 顶部导航 */
+    .nav { position: sticky; top: 0; z-index: 20; background: var(--canvas); border-bottom: 1px solid var(--line); }
+    .nav-in { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 64px; }
+    .brand { display: flex; align-items: center; gap: 12px; color: var(--ink); }
+    .brand:hover { text-decoration: none; }
+    .brand-mark {
+      display: grid; place-items: center; width: 30px; height: 30px;
+      background: var(--accent); color: #fff;
+      font: 600 12px/1 var(--mono); letter-spacing: .04em;
+    }
+    .brand-text { display: flex; flex-direction: column; font-size: .9375rem; font-weight: 600; line-height: 1.3; }
+    .brand-text em { font-style: normal; font-weight: 400; font-size: .75rem; color: var(--muted); }
+    .nav-links { display: flex; align-items: center; gap: 26px; font-size: .9375rem; }
+    .nav-links a { color: var(--body); white-space: nowrap; }
+    .nav-links a:hover { color: var(--accent); text-decoration: none; }
+    .nav-links a[aria-current="page"] { color: var(--accent); }
+    .nav-links a[aria-current="page"]::after { content: ""; display: block; height: 1px; background: var(--accent); margin-top: 2px; }
+
+    /* 首页 */
+    .hero { padding-block: clamp(28px, 3.4vw, 46px) clamp(22px, 2.6vw, 32px); }
+    .eyebrow { margin: 0 0 12px; font-size: .8125rem; letter-spacing: .1em; color: var(--accent); }
+    .hero h1 { font-size: clamp(1.95rem, 4vw, 2.95rem); line-height: 1.14; letter-spacing: -.025em; }
+    .hero .lede { margin-top: 12px; max-width: 32em; font-size: 1.0313rem; line-height: 1.8; }
+    .doors { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 2.2vw, 26px); margin-top: clamp(20px, 2.6vw, 30px); }
+    .door {
+      display: flex; flex-direction: column; background: var(--surface);
+      border: 1px solid var(--line); color: inherit;
+      transition: border-color .2s ease, box-shadow .2s ease;
+    }
+    .door:hover { border-color: var(--ink); text-decoration: none; }
+    .door:focus-visible { outline-offset: 2px; }
+    .door figure { margin: 0; aspect-ratio: 2 / 1; overflow: hidden; background: #e7e9e3; }
+    .door figure img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.16,1,.3,1); }
+    .door:hover figure img { transform: scale(1.03); }
+    .door-body { padding: 16px 22px 18px; display: flex; flex-direction: column; flex: 1; }
+    .door-tag { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; }
+    .door-tag .n { font-family: var(--mono); font-size: .75rem; color: var(--accent); }
+    .door-tag .k { font-size: 1.0625rem; font-weight: 600; color: var(--accent); letter-spacing: .16em; }
+    .door h2 { font-size: clamp(1.3rem, 1.8vw, 1.55rem); }
+    .door .desc { margin-top: 5px; font-size: .9rem; line-height: 1.78; }
+    .door-foot {
+      margin-top: auto; padding-top: 12px; display: flex; align-items: center; justify-content: space-between;
+      font-size: .8125rem; color: var(--muted);
+    }
+    .door-foot .go { color: var(--accent); font-weight: 500; }
+    .door:hover .door-foot .go { text-decoration: underline; text-underline-offset: 3px; }
+    .epigraph {
+      margin: clamp(30px, 4vw, 46px) 0 0; padding-top: 22px; border-top: 1px solid var(--line);
+      font-size: .9375rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline;
+    }
+    .epigraph q { color: var(--ink); font-style: normal; }
+    .epigraph span { font-size: .8125rem; }
+
+    /* 视图通用 */
+    .view { padding-block: clamp(30px, 4vw, 48px) clamp(48px, 6vw, 80px); }
+    .back {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: .875rem; color: var(--muted); margin-bottom: clamp(22px, 3vw, 34px);
+    }
+    .back::before { content: "←"; font-family: var(--mono); }
+    .back:hover { color: var(--ink); text-decoration: none; }
+    .view-head h1 { font-size: clamp(1.85rem, 3.4vw, 2.6rem); line-height: 1.25; }
+    .view-lede { margin-top: 14px; max-width: 36em; font-size: 1.0313rem; line-height: 1.95; }
+
+    /* 理念：三联 */
+    .triptych {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: clamp(20px, 3vw, 38px); margin-top: clamp(30px, 4vw, 48px);
+    }
+    .concept { border-top: 2px solid var(--ink); padding-top: 16px; display: flex; flex-direction: column; }
+    .concept .idx { font-family: var(--mono); font-size: .75rem; color: var(--accent); letter-spacing: .04em; }
+    .concept figure { margin: 14px 0 0; }
+    .concept figure img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; background: #e7e9e3; }
+    .concept figcaption { margin-top: 8px; font-size: .6875rem; color: var(--muted); line-height: 1.65; }
+    .concept h2 { margin-top: 14px; font-size: 1.1875rem; line-height: 1.45; }
+    .concept p { margin-top: 10px; font-size: .9375rem; line-height: 1.95; }
+    .concept .link { display: inline-block; margin-top: auto; padding-top: 14px; font-size: .8125rem; }
+    .concept .link::after { content: " →"; font-family: var(--mono); }
+
+    /* 实践：工具条 */
+    .case-bar {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px 24px;
+      flex-wrap: wrap; padding-block: 4px 18px; border-bottom: 1px solid var(--line);
+    }
+    .case-bar .back { margin: 0; }
+    .case-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+    .case-tabs a {
+      padding: 8px 14px; border: 1px solid var(--line);
+      font-size: .8125rem; color: var(--body); background: var(--surface);
+    }
+    .case-tabs a:hover { border-color: var(--ink); text-decoration: none; }
+    .case-tabs a[aria-current="page"] { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+    .case-count { font-family: var(--mono); font-size: .8125rem; color: var(--muted); }
+
+    /* 实践：正文与配图 */
+    .case-grid { display: grid; grid-template-columns: 1.02fr .98fr; gap: clamp(32px, 5vw, 64px); padding-block: clamp(28px, 4vw, 44px); }
+    .kicker { font-family: var(--mono); font-size: .8125rem; color: var(--accent); letter-spacing: .04em; }
+    .case-text h1 { margin-top: 12px; font-size: clamp(1.75rem, 3.2vw, 2.5rem); line-height: 1.22; }
+    .case-sub { margin-top: 12px; font-size: .9375rem; color: var(--muted); }
+    .case-body p { margin-top: 16px; font-size: 1rem; line-height: 1.95; }
+    .stats {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+      margin-top: 28px; background: var(--line); border-block: 1px solid var(--line);
+    }
+    .stat { background: var(--canvas); padding: 16px 14px 16px 0; }
+    .stat + .stat { padding-left: 14px; }
+    .stat .v { font-family: var(--mono); font-size: clamp(1.25rem, 2.2vw, 1.6rem); color: var(--ink); letter-spacing: -.03em; }
+    .stat .v small { font-family: var(--sans); font-size: .75rem; letter-spacing: 0; color: var(--muted); margin-left: 4px; }
+    .stat .l { margin-top: 4px; font-size: .75rem; color: var(--muted); line-height: 1.6; }
+    .timeline { list-style: none; margin: 28px 0 0; padding: 0; border-top: 1px solid var(--line); }
+    .timeline li { display: grid; grid-template-columns: 62px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--line-soft); font-size: .9375rem; line-height: 1.8; }
+    .timeline .y { font-family: var(--mono); font-size: .8125rem; color: var(--accent); padding-top: 3px; }
+    .reaction { margin-top: 30px; padding: 18px 20px; background: var(--surface); border-left: 2px solid var(--accent); }
+    .reaction h2 { font-size: .75rem; letter-spacing: .12em; color: var(--accent); margin-bottom: 8px; }
+    .reaction p { font-size: .9375rem; line-height: 1.9; }
+    blockquote { margin: 28px 0 0; padding-left: 20px; border-left: 2px solid var(--line); }
+    blockquote p { font-size: 1.125rem; line-height: 1.85; color: var(--ink); }
+    blockquote cite { display: block; margin-top: 8px; font-style: normal; font-size: .8125rem; color: var(--muted); }
+    .sources { margin-top: 30px; padding-top: 16px; border-top: 1px solid var(--line); }
+    .sources h2 { font-size: .75rem; letter-spacing: .12em; color: var(--muted); margin-bottom: 10px; }
+    .sources ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+    .sources li { font-size: .8125rem; line-height: 1.75; color: var(--muted); overflow-wrap: anywhere; }
+    .sources a { color: var(--body); text-decoration: underline; text-decoration-color: var(--line); }
+    .principle-note { margin-top: 22px; font-size: .875rem; line-height: 1.9; color: var(--muted); }
+    .principle-note b { color: var(--body); font-weight: 600; }
+
+    .case-media { display: grid; gap: 20px; align-content: start; }
+    .shot { margin: 0; }
+    .shot .frame { aspect-ratio: 4 / 3; overflow: hidden; background: #e7e9e3; }
+    .shot .frame img { width: 100%; height: 100%; object-fit: cover; }
+    .shot figcaption { margin-top: 8px; font-size: .75rem; color: var(--muted); line-height: 1.7; }
+    .shot .credit { display: block; margin-top: 2px; font-size: .6875rem; color: var(--muted); }
+    .shot .credit a { color: var(--muted); text-decoration: underline; text-decoration-color: var(--line); }
+
+    .case-nav { display: flex; justify-content: space-between; gap: 14px; border-top: 1px solid var(--line); padding-top: 22px; margin-top: 8px; flex-wrap: wrap; }
+    .case-nav .btn { min-width: 0; }
+    .case-nav .hint { font-size: .8125rem; color: var(--muted); align-self: center; }
+
+    /* 页脚 */
+    .footer { border-top: 1px solid var(--line); padding-block: 30px 44px; }
+    .footer-in { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 14px 40px; font-size: .8125rem; color: var(--muted); line-height: 1.9; }
+    .footer a { color: var(--body); }
+    .credits { margin-top: 22px; font-size: .75rem; color: var(--muted); }
+    .credits summary { cursor: pointer; color: var(--body); }
+    .credits ul { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 5px; }
+    .credits li { line-height: 1.7; }
+
+    /* 投影常见 1366x768：压缩首屏，保证两张卡完整露出 */
+    @media (min-width: 861px) and (max-height: 820px) {
+      .hero { padding-block: 24px 22px; }
+      .hero h1 { font-size: clamp(1.75rem, 3.3vw, 2.45rem); }
+      .hero .lede { font-size: 1rem; }
+      .doors { margin-top: 18px; }
+      .door figure { aspect-ratio: 2.4 / 1; }
+      .door-body { padding: 13px 20px 15px; }
+      .door h2 { font-size: 1.3rem; }
+      .door .desc { font-size: .875rem; line-height: 1.7; }
+      .door-foot { padding-top: 10px; }
+    }
+
+    @media (max-width: 1024px) {
+      .doors { grid-template-columns: 1fr; }
+      .door figure { aspect-ratio: 16 / 8; }
+      .case-grid { grid-template-columns: 1fr; }
+      .case-media { grid-template-columns: 1fr 1fr; gap: 16px; }
+    }
+    @media (max-width: 860px) {
+      .triptych { grid-template-columns: 1fr; gap: 32px; }
+      .concept figure { aspect-ratio: 16 / 9; }
+    }
+    @media (max-width: 640px) {
+      .nav-in { height: 58px; }
+      .nav-links { gap: 16px; font-size: .875rem; }
+      .brand-text { display: none; }
+      .hero { padding-block: 34px 36px; }
+      .door-body { padding: 18px 20px 20px; }
+      .door figure { aspect-ratio: 16 / 10; }
+      .case-bar { gap: 12px; }
+      .case-tabs a { padding: 7px 11px; }
+      .case-count { display: none; }
+      .stats { grid-template-columns: 1fr; }
+      .stat { padding: 12px 0; }
+      .stat + .stat { padding-left: 0; border-top: 1px solid var(--line-soft); }
+      .case-media { grid-template-columns: 1fr; }
+      .case-nav .btn { flex: 1 1 45%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+    }
+  </style>
 </head>
 <body>
-  <main>
-    <h1>新时代的中国外交</h1>
-    <p>国际援助专题报告筹备中。</p>
+  <a class="skip" href="#main">跳到主要内容</a>
+
+  <header class="nav">
+    <div class="wrap nav-in">
+      <a class="brand" href="#/">
+        <span class="brand-mark" aria-hidden="true">XG</span>
+        <span class="brand-text">新时代国际援助中的中国身影<em>中国式援助的知行合一</em></span>
+      </a>
+      <nav class="nav-links" aria-label="页面导航">
+        <a href="#/" data-nav="home">首页</a>
+        <a href="#/theory" data-nav="theory">理念</a>
+        <a href="#/practice/1" data-nav="practice">实践</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+
+    <!-- 首页 -->
+    <section class="view" id="view-home">
+      <div class="wrap">
+        <div class="hero">
+          <p class="eyebrow">习近平新时代中国特色社会主义思想概论 · 期末汇报</p>
+          <h1>中国式援助的知行合一</h1>
+          <p class="lede">理念回答为什么援，实践回答怎么援。三个理念，三个现场。</p>
+        </div>
+
+        <div class="doors">
+          <a class="door" href="#/theory">
+            <figure>
+              <img src="assets/theory-community.jpg" alt="联合国大会厅内景" width="1280" height="853" fetchpriority="high" decoding="async">
+            </figure>
+            <div class="door-body">
+              <p class="door-tag"><span class="n">01</span><span class="k">知</span></p>
+              <h2>理念</h2>
+              <p class="desc">人类命运共同体、真实亲诚与正确义利观、国际人道主义与生命至上。三条主张，回答为什么援。</p>
+              <p class="door-foot"><span>三张卡片</span><span class="go">进入</span></p>
+            </div>
+          </a>
+
+          <a class="door" href="#/practice/1">
+            <figure>
+              <img src="assets/case-peace-1.jpg" alt="中国维和军人头戴蓝色头盔列队" width="1280" height="806" fetchpriority="high" decoding="async">
+            </figure>
+            <div class="door-body">
+              <p class="door-tag"><span class="n">02</span><span class="k">行</span></p>
+              <h2>实践</h2>
+              <p class="desc">一针疫苗、一粒稻种、一顶蓝盔。三份公开报道，看理念怎样落到具体的人身上。</p>
+              <p class="door-foot"><span>三个案例</span><span class="go">进入</span></p>
+            </div>
+          </a>
+        </div>
+
+        <p class="epigraph"><q>知是行之始，行是知之成。</q><span>王守仁《传习录》</span></p>
+      </div>
+    </section>
+
+    <!-- 理念 -->
+    <section class="view" id="view-theory" hidden>
+      <div class="wrap">
+        <a class="back" href="#/">返回主界面</a>
+        <div class="view-head">
+          <h1>三个理念</h1>
+          <p class="view-lede">世界进入新的动荡变革期，和平赤字、发展赤字、安全赤字、治理赤字有增无减。中国的回答，写在三条主张里。</p>
+        </div>
+
+        <div class="triptych">
+          <article class="concept">
+            <p class="idx">01</p>
+            <figure>
+              <img src="assets/theory-community.jpg" alt="联合国大会厅内景" width="1280" height="853" loading="lazy" decoding="async">
+              <figcaption>联合国大会厅。多边场合是中国表述共同利益的主要现场。</figcaption>
+            </figure>
+            <h2>人类命运共同体</h2>
+            <p>各国命运与共。安全和发展不能由一家独享，只能由各方共同维护。援助因此不是恩赐，而是共同事业的一部分：公共卫生、粮食安全这些事，谁也无法单独解决。</p>
+            <a class="link" href="#/practice/1">对应实践：案例一 疫苗</a>
+          </article>
+
+          <article class="concept">
+            <p class="idx">02</p>
+            <figure>
+              <img src="assets/theory-partnership.jpg" alt="中非合作论坛会场外的标语墙" width="1280" height="960" loading="lazy" decoding="async">
+              <figcaption>中非合作论坛相关会场外景。对非合作是真实亲诚理念的主要落点。</figcaption>
+            </figure>
+            <h2>真实亲诚与正确义利观</h2>
+            <p>真实亲诚是对发展中国家的态度：真诚、实在、亲近、诚恳。正确义利观讲取舍：义利相兼，以义为先，不能只算自己的账。落到项目上，就是把技术留在当地，让对方能自己种、自己造。</p>
+            <a class="link" href="#/practice/2">对应实践：案例二 杂交水稻</a>
+          </article>
+
+          <article class="concept">
+            <p class="idx">03</p>
+            <figure>
+              <img src="assets/theory-humanity.jpg" alt="和平方舟医院船在海上航行" width="1280" height="852" loading="lazy" decoding="async">
+              <figcaption>和平方舟医院船。中国海军执行人道主义医疗服务的平台。</figcaption>
+            </figure>
+            <h2>国际人道主义与生命至上</h2>
+            <p>先救人，再谈其他。战乱里把身体挡在孩子前面，疫情里把疫苗送到最需要的地方。人道主义不是姿态，是在具体时刻做出的具体选择。</p>
+            <a class="link" href="#/practice/3">对应实践：案例三 维和</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 实践 -->
+    <section class="view" id="view-practice" hidden>
+      <div class="wrap">
+        <div class="case-bar">
+          <a class="back" href="#/">返回主界面</a>
+          <nav class="case-tabs" aria-label="案例切换">
+            <a href="#/practice/1" data-tab="1">01 疫苗</a>
+            <a href="#/practice/2" data-tab="2">02 杂交水稻</a>
+            <a href="#/practice/3" data-tab="3">03 维和</a>
+          </nav>
+          <span class="case-count" id="case-count">01 / 03</span>
+        </div>
+
+        <!-- 案例一 -->
+        <article class="case-view" id="case-1">
+          <div class="case-grid">
+            <div class="case-text">
+              <p class="kicker">案例 01 · 2020</p>
+              <h1>一针疫苗，跨越重洋</h1>
+              <p class="case-sub">中国新冠疫苗作为全球公共产品与国际抗疫合作</p>
+              <div class="case-body">
+                <p>2020 年 5 月 18 日，习近平主席在第 73 届世界卫生大会视频会议开幕式上宣布：中国新冠疫苗研发完成并投入使用后，将作为全球公共产品，为实现疫苗在发展中国家的可及性和可负担性作出中国贡献。</p>
+                <p>疫情期间，中国向 120 多个国家和国际组织供应超过 22 亿剂新冠疫苗，向 153 个国家和 15 个国际组织提供抗疫物资，向 34 个国家派出 37 支抗疫医疗专家组。动作也走在前面：最早承诺将疫苗作为全球公共产品，率先支持疫苗研发知识产权豁免，最早同发展中国家开展疫苗生产合作。</p>
+              </div>
+              <div class="stats">
+                <div class="stat"><p class="v">22<small>亿剂</small></p><p class="l">供应新冠疫苗</p></div>
+                <div class="stat"><p class="v">120<small>多个</small></p><p class="l">国家和国际组织</p></div>
+                <div class="stat"><p class="v">37<small>支</small></p><p class="l">抗疫医疗专家组</p></div>
+              </div>
+              <div class="reaction">
+                <h2>现场反响</h2>
+                <p>2021 年 3 月 20 日，中国向哥伦比亚提供的第三批新冠疫苗运抵波哥大。正在外地考察的时任总统杜克特意举行仪式，向全国播出视频讲话。一份援助抵达受援国时意味着什么，这个举动已经说明。</p>
+              </div>
+              <div class="sources">
+                <h2>来源</h2>
+                <ul>
+                  <li>中国政府网《携手同心 共克时艰——中国为国际抗疫作出重要贡献》</li>
+                  <li>国务院联防联控机制新闻发布会实录（2023-05-09）</li>
+                  <li>人民日报《世纪战“疫”的中国答卷》</li>
+                </ul>
+              </div>
+              <p class="principle-note"><b>对应理念</b>：人类卫生健康共同体。把疫苗作为公共产品而非筹码，回应“免疫鸿沟”，是全球发展倡议在卫生健康领域的具体实践。</p>
+            </div>
+
+            <div class="case-media">
+              <figure class="shot">
+                <div class="frame">
+                  <img src="assets/case-vaccine-2.jpg" alt="孟加拉国官员在机场接收中国国药新冠疫苗" width="1280" height="732" loading="lazy" decoding="async">
+                </div>
+                <figcaption>2021 年 7 月，孟加拉国官员接收中国国药新冠疫苗。
+                  <span class="credit">图：Press Information Department / Public domain · <a href="https://commons.wikimedia.org/wiki/File%3ABangladesh_Ministers_Receive_Sinopharm_Vaccine_Shipment_2021-07-03_(PID-0028699).jpg" rel="noopener">Wikimedia Commons</a></span>
+                </figcaption>
+              </figure>
+              <figure class="shot">
+                <div class="frame">
+                  <img src="assets/case-vaccine-1.jpg" alt="疫苗货运航班停靠机场，货物正在卸载" width="1280" height="853" loading="lazy" decoding="async">
+                </div>
+                <figcaption>疫苗货运航班抵达机场等待卸货。
+                  <span class="credit">图：PNA / Public domain · <a href="https://commons.wikimedia.org/wiki/File%3AUnloading_Sinopharm_NAIA.jpg" rel="noopener">Wikimedia Commons</a></span>
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+
+          <div class="case-nav">
+            <span class="hint">案例 1 / 3</span>
+            <span style="display:flex;gap:12px;flex-wrap:wrap">
+              <a class="btn primary" href="#/practice/2">下一则：杂交水稻</a>
+            </span>
+          </div>
+        </article>
+
+        <!-- 案例二 -->
+        <article class="case-view" id="case-2" hidden>
+          <div class="case-grid">
+            <div class="case-text">
+              <p class="kicker">案例 02 · 2007</p>
+              <h1>稻穗印上纸币之后</h1>
+              <p class="case-sub">中国杂交水稻技术援助马达加斯加</p>
+              <div class="case-body">
+                <p>马达加斯加种植水稻的历史很长，但受种子质量、种植技术和基础设施制约，产量长期无法满足当地口粮需求。2007 年，中国援马达加斯加杂交水稻示范中心项目正式启动。</p>
+                <p>到今天，中国杂交水稻在马达加斯加累计推广面积已达 9 万公顷，平均每公顷产量约 7.5 吨，是当地常规品种的 2 至 3 倍；马达加斯加成为非洲种植杂交水稻面积最大的国家，也是第一个实现杂交水稻商业化的非洲国家。中国专家选育出 5 个适应当地环境的稻种，举办数百场技术培训，累计培训 2000 余人。育种、制种、种植、加工、销售，全产业链都留在了当地。</p>
+              </div>
+              <div class="stats">
+                <div class="stat"><p class="v">9<small>万公顷</small></p><p class="l">累计推广面积</p></div>
+                <div class="stat"><p class="v">7.5<small>吨/公顷</small></p><p class="l">平均产量</p></div>
+                <div class="stat"><p class="v">2000<small>余人</small></p><p class="l">累计接受培训</p></div>
+              </div>
+              <div class="reaction">
+                <h2>现场反响</h2>
+                <p>村民把这稻子叫“擦拉贝”，当地语意思是“最好的东西”。为表达感激，马达加斯加把中国杂交水稻的稻穗印在面额最大的 20000 阿里亚里纸币上。2023 年，马达加斯加农业部原秘书长拉库托松·菲利贝尔到长沙，第一件事就是去袁隆平墓前祭拜，带去一碗在非洲种出的杂交稻米。</p>
+              </div>
+              <div class="sources">
+                <h2>来源</h2>
+                <ul>
+                  <li>新华社《通讯丨中国杂交水稻在马达加斯加的深耕之路》（2026-10-16）</li>
+                  <li>中国农网《“禾下”相连：杂交水稻在马达加斯加生根发芽》（2025-08-24）</li>
+                </ul>
+              </div>
+              <p class="principle-note"><b>对应理念</b>：从技术援助到能力共建。以粮食安全合作落实全球发展倡议，帮受援国把“救济粮”变成“自己种的粮”，既授人以鱼，也授人以渔。</p>
+            </div>
+
+            <div class="case-media">
+              <figure class="shot">
+                <div class="frame">
+                  <img src="assets/case-rice-2.jpg" alt="马达加斯加郁郁葱葱的稻田" width="1280" height="768" loading="lazy" decoding="async">
+                </div>
+                <figcaption>马达加斯加的稻田。
+                  <span class="credit">图：ElyJean Rodin / CC BY-SA 4.0 · <a href="https://commons.wikimedia.org/wiki/File%3ARice_fields_in_Madagascar.jpg" rel="noopener">Wikimedia Commons</a></span>
+                </figcaption>
+              </figure>
+              <figure class="shot">
+                <div class="frame">
+                  <img src="assets/case-rice-1.jpg" alt="马达加斯加乡村成片的稻田与红土" width="1280" height="720" loading="lazy" decoding="async">
+                </div>
+                <figcaption>马达加斯加中部的稻田。
+                  <span class="credit">图：Maky (Alex Dunkel) / CC BY-SA 3.0 · <a href="https://commons.wikimedia.org/wiki/File%3ARice_paddies_in_Madagascar_001.jpg" rel="noopener">Wikimedia Commons</a></span>
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+
+          <div class="case-nav">
+            <a class="btn" href="#/practice/1">上一则：疫苗</a>
+            <a class="btn primary" href="#/practice/3">下一则：维和</a>
+          </div>
+        </article>
+
+        <!-- 案例三 -->
+        <article class="case-view" id="case-3" hidden>
+          <div class="case-grid">
+            <div class="case-text">
+              <p class="kicker">案例 03 · 2015</p>
+              <h1>蓝盔下的小女孩</h1>
+              <p class="case-sub">中国首次向南苏丹派遣成建制维和步兵营</p>
+              <div class="case-body">
+                <p>2015 年，中国首次向南苏丹派遣成建制维和步兵营，承担保护平民、巡逻警戒和防卫护卫等任务。在远离祖国的非洲大陆，一场突发事件让中国维和军人的形象留在了当地民众心里。</p>
+                <p>当年 5 月，营区附近的难民营发生大规模械斗，数百名难民手持棍棒、砍刀相互攻击。三连连长张勇带队员赶赴现场，组织隔离冲突人群。一名三四岁的小女孩被挤进人群中心，抱着头蹲在地上，石块不断飞过。张勇冲上前，用身体护住孩子，飞石砸在身上，右小腿被击中，鲜血直流，他始终没有退缩。冲突双方渐渐放下石块和棍棒，一名年轻女子跑上前抱起孩子，不停鞠躬致谢。</p>
+              </div>
+              <ul class="timeline">
+                <li><span class="y">2015</span><span>中国首次向南苏丹派遣成建制维和步兵营。</span></li>
+                <li><span class="y">5 月</span><span>营区附近难民营发生大规模械斗，张勇带队隔离冲突人群。</span></li>
+                <li><span class="y">现场</span><span>张勇用身体护住一名三四岁的女童，右小腿受伤。</span></li>
+              </ul>
+              <blockquote>
+                <p>“我也是一名父亲，看到这样的情景，没有多想就冲了上去。”</p>
+                <cite>张勇，中国维和步兵营三连连长</cite>
+              </blockquote>
+              <div class="sources">
+                <h2>来源</h2>
+                <ul>
+                  <li><a href="https://www.mfa.gov.cn/ziliao_674904/zt_674979/dnzt_674981/qtzt/zggcddwjw100ggs/xsd/202208/t20220824_10750777.shtml" rel="noopener">外交部：故事的核心来源</a></li>
+                  <li><a href="https://www.mod.gov.cn/gfbw/gfjy_index/xjdx/4855764.html" rel="noopener">国防部：人物第一手叙述</a></li>
+                  <li><a href="https://www.mod.gov.cn/gfbw/qwfb/4871413.html" rel="noopener">国防部：外交与维和背景</a></li>
+                  <li><a href="https://military.people.com.cn/n/2014/0925/c1011-25735660.html" rel="noopener">人民网：任务授权与派遣背景</a></li>
+                </ul>
+              </div>
+              <p class="principle-note"><b>对应理念</b>：从保护一个陌生的非洲儿童，到参与联合国维和行动。中国坚持走和平发展道路，尊重生命、维护和平，并在国际社会中承担应有责任。</p>
+            </div>
+
+            <div class="case-media">
+              <figure class="shot">
+                <div class="frame">
+                  <img src="assets/case-peace-1.jpg" alt="头戴蓝色贝雷帽的中国维和军人" width="1280" height="806" loading="lazy" decoding="async">
+                </div>
+                <figcaption>中国维和军人在刚果（金）南基伍省参加授勋仪式。
+                  <span class="credit">图：MONUSCO Photos / CC BY-SA 2.0 · <a href="https://commons.wikimedia.org/wiki/File%3AA_Chinese_peacekeeper_attends_a_medal_parade_ceremony_in_Bukavu%2C_South_Kivu_(10761340676).jpg" rel="noopener">Wikimedia Commons</a></span>
+                </figcaption>
+              </figure>
+              <figure class="shot">
+                <div class="frame">
+                  <img src="assets/case-peace-2.jpg" alt="中国维和工兵分队与当地人员在新修道路旁交谈" width="1280" height="960" loading="lazy" decoding="async">
+                </div>
+                <figcaption>中国维和工兵分队在任务区修筑道路。
+                  <span class="credit">图：Radio Okapi / CC BY 2.0 · <a href="https://commons.wikimedia.org/wiki/File%3AContigent_Ingenieurs_Chinois_wrk_route_Amani.Nguba_17_07_08_008_(4324407839).jpg" rel="noopener">Wikimedia Commons</a></span>
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+
+          <div class="case-nav">
+            <a class="btn" href="#/practice/2">上一则：杂交水稻</a>
+            <a class="btn primary" href="#/">回到主界面</a>
+          </div>
+        </article>
+      </div>
+    </section>
   </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-in">
+        <p>习近平新时代中国特色社会主义思想概论 · 期末汇报<br>主题：新时代国际援助中的中国身影</p>
+        <p><a href="https://github.com/Nekobenzene/XGpre" rel="noopener">项目源码</a><br>案例材料来自公开报道，配图均标注来源与许可</p>
+      </div>
+      <details class="credits">
+        <summary>配图来源与许可</summary>
+        <ul>
+          <li>联合国大会厅：Basil D Soufi，CC BY-SA 3.0，Wikimedia Commons</li>
+          <li>中非合作论坛会场：Stephen Walli，CC BY-SA 2.0，Wikimedia Commons</li>
+          <li>和平方舟医院船：US Navy（Petty Officer 2nd Class Laurie Dexter），Public domain</li>
+          <li>孟加拉国接收国药疫苗：Press Information Department，Public domain</li>
+          <li>疫苗货运航班卸货：PNA（Avito C. Dalan），Public domain</li>
+          <li>马达加斯加稻田：ElyJean Rodin，CC BY-SA 4.0；Maky (Alex Dunkel)，CC BY-SA 3.0</li>
+          <li>中国维和军人授勋：MONUSCO Photos，CC BY-SA 2.0</li>
+          <li>中国维和工兵修路：Radio Okapi，CC BY 2.0</li>
+        </ul>
+        <p style="margin-top:10px">配图为资料照片，用于课程汇报的视觉说明，未指认图中人物与案例当事人为同一人。</p>
+      </details>
+    </div>
+  </footer>
+
+  <noscript>
+    <p style="padding:16px">本页面需要启用 JavaScript 才能在首页、理念与实践之间切换。</p>
+  </noscript>
+
+  <script>
+    'use strict';
+    (() => {
+      const views = {
+        home: document.getElementById('view-home'),
+        theory: document.getElementById('view-theory'),
+        practice: document.getElementById('view-practice')
+      };
+      const cases = [1, 2, 3].map(n => document.getElementById('case-' + n));
+      const navLinks = [...document.querySelectorAll('[data-nav]')];
+      const tabs = [...document.querySelectorAll('[data-tab]')];
+      const count = document.getElementById('case-count');
+      const titles = {
+        home: '中国式援助的知行合一 · 新时代国际援助中的中国身影',
+        theory: '三个理念 · 中国式援助的知行合一',
+        'practice/1': '一针疫苗，跨越重洋 · 中国式援助的知行合一',
+        'practice/2': '稻穗印上纸币之后 · 中国式援助的知行合一',
+        'practice/3': '蓝盔下的小女孩 · 中国式援助的知行合一'
+      };
+
+      function parse() {
+        const raw = (location.hash || '#/').replace(/^#\/?/, '');
+        if (raw === 'theory') return { view: 'theory', caseNo: 0 };
+        if (raw.startsWith('practice')) {
+          const n = Number(raw.split('/')[1]);
+          return { view: 'practice', caseNo: [1, 2, 3].includes(n) ? n : 1 };
+        }
+        return { view: 'home', caseNo: 0 };
+      }
+
+      let first = true;
+      function render() {
+        const { view, caseNo } = parse();
+        for (const [name, el] of Object.entries(views)) {
+          el.hidden = name !== view;
+        }
+        cases.forEach((el, i) => { el.hidden = view !== 'practice' || i + 1 !== caseNo; });
+
+        for (const link of navLinks) {
+          if (link.dataset.nav === view) link.setAttribute('aria-current', 'page');
+          else link.removeAttribute('aria-current');
+        }
+        for (const tab of tabs) {
+          if (view === 'practice' && Number(tab.dataset.tab) === caseNo) tab.setAttribute('aria-current', 'page');
+          else tab.removeAttribute('aria-current');
+        }
+        if (count) count.textContent = String(caseNo).padStart(2, '0') + ' / 03';
+
+        const key = view === 'practice' ? 'practice/' + caseNo : view;
+        document.title = titles[key] || titles.home;
+
+        if (!first) {
+          window.scrollTo(0, 0);
+          const heading = (view === 'practice' ? cases[caseNo - 1] : views[view]).querySelector('h1');
+          if (heading) {
+            heading.setAttribute('tabindex', '-1');
+            heading.focus({ preventScroll: true });
+          }
+        }
+        first = false;
+      }
+
+      window.addEventListener('hashchange', render);
+      render();
+    })();
+  </script>
 </body>
 </html>
