@@ -146,35 +146,77 @@
     .screen-head .lede { margin-top: 14px; color: rgba(226, 238, 233, .74); font-size: 1rem; line-height: 1.8; }
 
     .doors {
-      position: relative; margin-top: auto;
+      position: relative; isolation: isolate; margin-top: auto;
       display: grid; grid-template-columns: 1fr 1fr;
-      border: 1px solid rgba(255, 255, 255, .14);
+      border: 1px solid rgba(255, 255, 255, .22);
       border-radius: 10px; overflow: hidden;
     }
-    .door {
-      display: block; padding: clamp(15px, 1.9vw, 21px) clamp(17px, 2.1vw, 25px);
-      background: rgba(255, 255, 255, .025); color: #e9f1ec;
-      transition: background-color .22s ease;
+    /* 玻璃下方的底片：让模糊与折射有东西可折射 */
+    .doors::before {
+      content: ""; position: absolute; inset: -6%; z-index: -1;
+      background: url(assets/case-peace-1.jpg) center 58% / cover;
+      filter: blur(30px) saturate(1.3) brightness(.75);
+      opacity: .42;
     }
-    .door:hover { background: rgba(255, 255, 255, .08); text-decoration: none; }
-    .door + .door { border-left: 1px solid rgba(255, 255, 255, .14); }
+    .door {
+      position: relative; isolation: isolate;
+      display: block; padding: clamp(15px, 1.9vw, 21px) clamp(17px, 2.1vw, 25px);
+      color: #eef4f0;
+      transition: background-color .3s ease, box-shadow .3s ease;
+    }
+    /* 液态玻璃：高透、亮边、强折射 */
+    .door--liquid {
+      background: linear-gradient(158deg, rgba(226, 242, 238, .17), rgba(206, 230, 224, .07) 46%, rgba(176, 208, 202, .04));
+      backdrop-filter: blur(18px) saturate(1.6) brightness(1.04);
+      -webkit-backdrop-filter: blur(18px) saturate(1.6) brightness(1.04);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .55),
+        inset 0 -1px 0 rgba(255, 255, 255, .1),
+        inset 1px 0 0 rgba(255, 255, 255, .16);
+    }
+    /* 凝态玻璃：青绿染色、更厚、内发光 */
+    .door--frozen {
+      background: linear-gradient(158deg, rgba(30, 132, 113, .26), rgba(14, 84, 72, .2) 52%, rgba(10, 58, 50, .14));
+      backdrop-filter: blur(28px) saturate(1.9);
+      -webkit-backdrop-filter: blur(28px) saturate(1.9);
+      box-shadow:
+        inset 0 1px 0 rgba(214, 244, 236, .42),
+        inset 0 -1px 0 rgba(9, 46, 41, .5),
+        inset 0 0 26px rgba(126, 214, 194, .16);
+    }
+    .door::after {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(132deg, rgba(255, 255, 255, .2), rgba(255, 255, 255, .03) 36%, transparent 60%);
+      opacity: .65; transition: opacity .3s ease;
+    }
+    .door:hover::after { opacity: 1; }
+    .door:hover { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .62), inset 0 0 30px rgba(159, 216, 203, .18); }
+    .door:hover { text-decoration: none; }
+    .door + .door { border-left: 1px solid rgba(255, 255, 255, .2); }
     .door-top { display: flex; align-items: baseline; gap: 10px; }
     .door-n { font-family: var(--mono); font-size: .75rem; color: #9fd8cb; }
     .door-k { font-size: .9375rem; letter-spacing: .2em; color: #9fd8cb; }
-    .door h2 { margin-top: 4px; color: #fff; font-size: clamp(1.15rem, 1.7vw, 1.4rem); letter-spacing: 0; }
-    .door p { margin-top: 5px; color: rgba(226, 238, 233, .68); font-size: .8438rem; line-height: 1.7; max-width: 32em; }
-    .door-go { display: inline-block; margin-top: 10px; font-size: .75rem; color: #9fd8cb; }
+    .door h2 { margin-top: 4px; color: #fff; font-size: clamp(1.15rem, 1.7vw, 1.4rem); letter-spacing: 0; text-shadow: 0 1px 14px rgba(0, 0, 0, .45); }
+    .door p { margin-top: 5px; color: rgba(238, 246, 242, .8); font-size: .8438rem; line-height: 1.7; max-width: 32em; text-shadow: 0 1px 10px rgba(0, 0, 0, .45); }
+    .door-go { display: inline-block; margin-top: 10px; font-size: .75rem; color: #bfe9de; text-shadow: 0 1px 10px rgba(0, 0, 0, .4); }
     .door-go::after { content: " →"; font-family: var(--mono); }
+    /* 霜态玻璃：乳白、低饱和、磨砂 */
     .clasp {
       position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
       width: 46px; height: 46px; border-radius: 50%;
-      background: #0a1715; border: 1px solid rgba(255, 255, 255, .22);
-      box-shadow: 0 8px 22px rgba(0, 0, 0, .5), inset 0 0 14px rgba(159, 216, 203, .12);
+      background: linear-gradient(160deg, rgba(246, 251, 248, .66), rgba(204, 226, 217, .4));
+      backdrop-filter: blur(12px) saturate(1.15);
+      -webkit-backdrop-filter: blur(12px) saturate(1.15);
+      border: 1px solid rgba(255, 255, 255, .62);
+      box-shadow:
+        0 8px 22px rgba(0, 0, 0, .4),
+        inset 0 1px 0 rgba(255, 255, 255, .85),
+        inset 0 -2px 6px rgba(120, 160, 150, .28);
       display: grid; place-items: center;
     }
     .clasp i {
       position: absolute; width: 17px; height: 17px;
-      border: 1.5px solid #9fd8cb; border-radius: 50%;
+      border: 1.5px solid #0d4f43; border-radius: 50%;
       transition: transform .35s cubic-bezier(.16, 1, .3, 1);
     }
     .clasp i:first-child { transform: translateX(-5px); }
@@ -390,13 +432,13 @@
                 </div>
 
                 <div class="doors">
-                  <a class="door" href="#/theory">
+                  <a class="door door--liquid" href="#/theory">
                     <span class="door-top"><span class="door-n">01</span><span class="door-k">知</span></span>
                     <h2>理念</h2>
                     <p>人类命运共同体、真实亲诚与正确义利观、国际人道主义与生命至上。</p>
                     <span class="door-go">三张卡片</span>
                   </a>
-                  <a class="door" href="#/practice/1">
+                  <a class="door door--frozen" href="#/practice/1">
                     <span class="door-top"><span class="door-n">02</span><span class="door-k">行</span></span>
                     <h2>实践</h2>
                     <p>一针疫苗、一粒稻种、一顶蓝盔。三份公开报道。</p>
