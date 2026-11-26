@@ -111,7 +111,10 @@
   <script>
     'use strict';
     (() => {
-      const API_URL = 'https://1529785241-cw41hwjsxl.ap-guangzhou.tencentscf.com/chat';
+      const isLocalPreview = ['localhost', '127.0.0.1'].includes(location.hostname);
+      const API_URL = isLocalPreview
+        ? '/chat'
+        : 'https://1529785241-cw41hwjsxl.ap-guangzhou.tencentscf.com/chat';
       const $ = id => document.getElementById(id);
       const connection = $('connection'), codeInput = $('access-code'), connect = $('connect');
       const codeError = $('code-error'), chatError = $('chat-error'), composer = $('composer');
