@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="referrer" content="no-referrer">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src https://1529785241-cw41hwjsxl.ap-guangzhou.tencentscf.com; base-uri 'none'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'self' https://1529785241-cw41hwjsxl.ap-guangzhou.tencentscf.com; base-uri 'none'; form-action 'none'">
   <title>DeepSeek 对话</title>
   <style>
     :root { color-scheme: light; --canvas:#f6f7f9; --surface:#fff; --text:#20242b; --muted:#5e6672; --line:#e2e5ea; --outline:#858f9c; --accent:#245de8; --tint:#edf2ff; --error:#b42318; --radius:8px; }
@@ -33,6 +33,9 @@
     .hint { margin:8px 0 0; color:var(--muted); font-size:.8125rem; }
     .error { margin:8px 0 0; color:var(--error); font-size:.875rem; overflow-wrap:anywhere; }
     .conversation { position:relative; flex:1; min-height:0; overflow:auto; overscroll-behavior:contain; padding:24px; scroll-padding-block:24px; }
+    .cases { display:flex; align-items:center; flex-wrap:wrap; gap:8px; padding:10px 16px; border-bottom:1px solid var(--line); font-size:.875rem; }
+    .cases select { font:inherit; color:var(--text); background:var(--surface); border:1px solid var(--outline); border-radius:6px; min-height:42px; max-width:100%; min-width:0; flex:1 1 180px; padding:6px 8px; }
+    .cases p { flex-basis:100%; margin:0; }
     .empty { min-height:100%; display:grid; place-items:center; margin:0; color:var(--muted); font-size:.9375rem; text-align:center; }
     .message { margin:0 0 24px; max-width:100%; }
     .message:last-child { margin-bottom:0; }
@@ -81,6 +84,14 @@
       <p id="code-hint" class="hint">口令由页面所有者提供。</p>
       <p id="code-error" class="error" role="alert" hidden></p>
     </form>
+    <div class="cases">
+      <label for="case-select">案例</label>
+      <select id="case-select" disabled>
+        <option value="">选择一个案例</option>
+      </select>
+      <button id="explain-case" type="button" disabled>讲解案例</button>
+      <p id="case-error" class="error" role="alert" hidden></p>
+    </div>
     <section id="conversation" class="conversation" aria-label="对话记录" role="log" aria-live="polite" aria-relevant="additions text">
       <p id="empty" class="empty">对话将在这里显示</p>
     </section>
@@ -106,7 +117,11 @@
       const codeError = $('code-error'), chatError = $('chat-error'), composer = $('composer');
       const conversation = $('conversation'), empty = $('empty'), prompt = $('prompt');
       const send = $('send'), newChat = $('new-chat'), lock = $('lock');
+      const caseSelect = $('case-select'), explainCase = $('explain-case'), caseError = $('case-error');
+      const cases = new Map();
+      const encoder = new TextEncoder();
       let accessCode = '', history = [], pending = null;
+      let activeCase = null;
 
       function showError(element, message = '') {
         element.textContent = message;
@@ -119,9 +134,12 @@
         send.setAttribute('aria-label', pending ? '停止等待回答' : '发送消息');
         newChat.disabled = Boolean(pending) || !history.length;
         lock.disabled = Boolean(pending);
+        caseSelect.disabled = Boolean(pending) || !cases.size;
+        explainCase.disabled = Boolean(pending) || !accessCode || !cases.has(caseSelect.value);
       }
       function resetChat() {
         history = [];
+        activeCase = null;
         conversation.replaceChildren(empty);
         empty.hidden = false;
         prompt.value = '';
@@ -153,6 +171,32 @@
         try { data = await response.json(); }
         catch { throw new Error('接口返回异常，请稍后重试。'); }
         return { response, data };
+      }
+      async function readCaseJson(file, signal) {
+        const response = await fetch('./examples/' + file, { signal });
+        if (!response.ok) throw new Error('案例材料加载失败，请稍后重试。');
+        return response.json();
+      }
+      async function loadCases() {
+        try {
+          const index = await readCaseJson('index.json', AbortSignal.timeout(15000));
+          for (const entry of index.cases) {
+            cases.set(entry.id, entry.file);
+            caseSelect.add(new Option(entry.title, entry.id));
+          }
+          updateControls();
+        } catch {
+          showError(caseError, '案例目录加载失败，请刷新页面重试。');
+        }
+      }
+      function caseInstructions(caseData) {
+        return [
+          '你在协助一场主题为“新时代的中国外交”、方向为“国际援助”的习概课汇报。',
+          '首次讲解时，用故事中一个具体场景开头，然后交代援助背景、参与方、行动与结果，最后用可核实事实解释一到两个外交理念或合作原则。',
+          '用适合课堂口述的中文写约400字。事实处标注来源编号（如 [S1]），结尾列出引用的来源标题。后续追问继续以本案例材料为依据。',
+          '区分报道事实、人物表态和你的解读。尊重背景与范围说明，不增添对白、日期、因果、数据或未经证实的后续进展。材料不足时直接说明。',
+          JSON.stringify(caseData)
+        ].join('\n');
       }
       connection.addEventListener('submit', async event => {
         event.preventDefault();
@@ -201,35 +245,62 @@
           composer.requestSubmit();
         }
       });
-      composer.addEventListener('submit', async event => {
+      composer.addEventListener('submit', event => {
         event.preventDefault();
         if (pending) { pending.abort(); return; }
         const text = prompt.value.trim();
-        if (!accessCode || !text) return;
+        if (text) sendMessage(text);
+      });
+      caseSelect.addEventListener('change', updateControls);
+      explainCase.addEventListener('click', () => {
+        const file = cases.get(caseSelect.value);
+        if (file) sendMessage('请讲解这个案例。', file);
+      });
+      async function sendMessage(text, caseFile) {
+        if (!accessCode || pending) return;
         showError(chatError);
-        const context = history.slice();
-        while (context.length && (context.length >= 39 || context.reduce((sum, item) => sum + item.content.length, text.length) > 24000)) context.splice(0, 2);
-        context.push({ role: 'user', content: text });
-        const userMessage = message('user', text);
-        const assistantMessage = message('assistant', '正在思考…', true);
-        prompt.value = '';
+        let userMessage, assistantMessage;
+        if (!caseFile) prompt.value = '';
         const controller = new AbortController();
         pending = controller;
         let timedOut = false;
         const timer = setTimeout(() => { timedOut = true; controller.abort(); }, 110000);
         updateControls();
         try {
-          const { response, data } = await request({ messages: context, stream: false, max_tokens: 1024 }, accessCode, controller.signal);
+          let caseData = activeCase;
+          if (caseFile) {
+            try { caseData = await readCaseJson(caseFile, controller.signal); }
+            catch (error) {
+              if (controller.signal.aborted) throw error;
+              throw new Error('案例材料加载失败，请再次点击“讲解案例”。');
+            }
+          }
+          const context = caseFile ? [] : history.slice();
+          const instructions = caseData ? [{ role: 'system', content: caseInstructions(caseData) }] : [];
+          const body = { messages: [], stream: false, max_tokens: 1024 };
+          const current = { role: 'user', content: text };
+          for (;;) {
+            body.messages = [...instructions, ...context, current];
+            const chars = body.messages.reduce((sum, item) => sum + item.content.length, 0);
+            if (body.messages.length <= 40 && chars <= 24000 && encoder.encode(JSON.stringify(body)).length <= 65536) break;
+            if (!context.length) throw new Error('本次消息和案例材料过长，请缩短消息再试。');
+            context.splice(0, 2);
+          }
+          const display = caseFile ? '讲解案例 · ' + caseData.title + '\n\n' + caseData.story.text : text;
+          userMessage = message('user', display);
+          assistantMessage = message('assistant', '正在思考…', true);
+          const { response, data } = await request(body, accessCode, controller.signal);
           if (!response.ok) throw Object.assign(new Error(data.error || '发送失败，请稍后重试。'), { status: response.status });
           if (typeof data.reply !== 'string') throw new Error('回答格式异常，请重新发送。');
-          history = context.concat({ role: 'assistant', content: data.reply });
+          history = [...context, current, { role: 'assistant', content: data.reply }];
+          activeCase = caseData;
           assistantMessage.content.textContent = data.reply;
           assistantMessage.article.classList.remove('thinking');
           conversation.scrollTop = conversation.scrollHeight;
         } catch (error) {
-          userMessage.article.remove();
-          assistantMessage.article.remove();
-          if (!prompt.value) prompt.value = text;
+          userMessage?.article.remove();
+          assistantMessage?.article.remove();
+          if (!caseFile && !prompt.value) prompt.value = text;
           if (!history.length) empty.hidden = false;
           showError(chatError, controller.signal.aborted ? (timedOut ? '等待回答超时，可以重新发送。' : '已停止等待。') :
             error instanceof TypeError ? '发送失败，请检查网络后重试。' : error.message);
@@ -245,7 +316,7 @@
           updateControls();
           (accessCode ? prompt : codeInput).focus();
         }
-      });
+      }
       newChat.addEventListener('click', () => { resetChat(); prompt.focus(); });
       lock.addEventListener('click', () => {
         accessCode = '';
@@ -256,6 +327,7 @@
         codeInput.focus();
       });
       updateControls();
+      loadCases();
     })();
   </script>
 </body>

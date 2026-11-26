@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "philippines-haiyan-2013",
+      "title": "雨林里的搜寻与一条彩虹围巾",
+      "tags": [
+        "灾害救援",
+        "民间力量",
+        "跨国志愿协作"
+      ],
+      "file": "philippines-haiyan-2013.json"
+    },
+    {
+      "id": "sierra-leone-ebola-2014",
+      "title": "妮可出院前在病房里跳起了舞",
+      "tags": [
+        "公共卫生援助",
+        "埃博拉疫情",
+        "中非合作"
+      ],
+      "file": "sierra-leone-ebola-2014.json"
+    },
+    {
+      "id": "tonga-laparoscopy-2025",
+      "title": "萨劳特在汤加做了一台微创手术",
+      "tags": [
+        "医疗援助",
+        "南太平洋",
+        "技术转移"
+      ],
+      "file": "tonga-laparoscopy-2025.json"
+    }
+  ]
+}
