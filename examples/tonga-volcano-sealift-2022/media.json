@@ -1,0 +1,22 @@
+{
+  "images": [
+    {
+      "source_url": "https://commons.wikimedia.org/wiki/File:ISS-66_Atmospheric_plume_from_2022_Hunga_Tonga_eruption_-_edited.jpg",
+      "license": "Public domain",
+      "caption": "国际空间站拍摄的2022年汤加喷发后的大气羽流。图片用于交代灾害背景。",
+      "license_url": "https://commons.wikimedia.org/wiki/File:ISS-66_Atmospheric_plume_from_2022_Hunga_Tonga_eruption_-_edited.jpg",
+      "version": "Wikimedia Commons 960px 展示版",
+      "file": "tonga-volcanic-plume.jpg",
+      "creator": "NASA / Kayla Barron",
+      "width": 960,
+      "height": 620
+    }
+  ],
+  "references": [
+    {
+      "label": "查看报道配图｜五指山舰靠泊湛江军港，殷征摄",
+      "source_id": "S1",
+      "source_url": "http://www.mod.gov.cn/gfbw/jsxd/jy/4907212.html"
+    }
+  ]
+}

@@ -52,7 +52,7 @@ Invoke-RestMethod 'http://127.0.0.1:8080/chat' -Method Post -ContentType 'applic
 | `model` | 可省略，当前固定 `deepseek-chat` |
 | `stream` | 可省略，发送 `false` 获取非流式 JSON |
 
-消息正文总长度上限为 24000 个 JavaScript 字符单位，整个 UTF-8 JSON 请求体上限为 65536 字节。计入 `system` 消息里的案例材料。页面会裁掉最旧的问答，给当前案例和新消息留空间。
+消息正文总长度上限为 24000 个 JavaScript 字符单位，整个 UTF-8 JSON 请求体上限为 65536 字节。页面裁掉最旧的问答，为事件讲解的 `system` 提示词和本次问题留空间。内置案例直接读取公开 JSON，浏览时无需调用 `/chat`。
 
 成功响应为 HTTP 200，`reply` 是回答文本。上游提供时也返回 `choices`、`usage`、`model`、`id`、`object` 和 `created`。失败返回 `{"error":"…"}`，部分上游失败另外提供 `upstream_status`。
 

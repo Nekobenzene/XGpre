@@ -1,0 +1,22 @@
+{
+  "images": [
+    {
+      "file": "mushroom-growing-example.jpg",
+      "caption": "食用菌培养示例。图用于说明种菇的技术背景，拍摄地与正文中的卢旺达项目不同。",
+      "creator": "Leslie Seaton",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:1_-_Mushroom_Cultivation_(9791651173).jpg",
+      "version": "Wikimedia Commons 原图",
+      "width": 700,
+      "height": 700
+    }
+  ],
+  "references": [
+    {
+      "label": "查看报道配图｜研讨会代表参观基加利菌菇农场，黄万晴摄，非伯瑟德个人照",
+      "source_id": "S1",
+      "source_url": "https://paper.people.com.cn/rmrb/html/2023-03/26/nw.D110000renmrb_20230326_1-03.htm"
+    }
+  ]
+}

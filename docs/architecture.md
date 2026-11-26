@@ -2,23 +2,38 @@
 
 ```mermaid
 flowchart LR
-    Static["GitHub Pages<br/>demo/index.html 和案例 JSON"] --> Browser["浏览器<br/>故事展示、讲解提示与对话"]
+    Static["GitHub Pages<br/>讲稿、案例静态页和问答"] --> Browser["浏览器<br/>故事展示、讲解提示与对话"]
     Browser -->|"POST /chat + 演示口令"| SCF["腾讯云 Web 函数<br/>鉴权、限额、转发"]
     SCF -->|"模型请求 + 服务端 API Key"| DeepSeek["DeepSeek API"]
 ```
 
-页面从同一站点加载 `examples/index.json`。点击「讲解案例」后，再读取选中的案例，把材料与讲解要求放进一条 `system` 消息。追问沿用该案例，同时发送最近的对话。切换案例后，话题从新案例开始，「新对话」会清除当前案例上下文。
+正式交互站位于 `/interactive/`。案例库和各案例详情由 `node scripts/build-interactive.cjs` 从 `examples/` 生成，详情地址为 `/interactive/cases/<id>/`。案例阅读只发起静态文件 GET 请求。`/demo/` 测试页从同一份 JSON 读取案例。问答初稿在 `/interactive/ask/`，模板和运行脚本分别为 `scripts/interactive-ask.html` 和 `interactive/chat.js`。
 
-浏览器只在当前页面内存中保留口令和对话。腾讯云函数校验口令，将消息转发到 DeepSeek，并把回答以 JSON 返回。网页以纯文本显示回答。本地的 `scripts/dev.cjs` 在回环地址提供 `/demo/` 测试页和相同的 API 处理器，默认在上游调用处返回模拟结果。接口自测位于 `tests/api.cjs`。
+「AI 问答」发送事件讲解提示词、最近的问答和本次问题。选择内置案例不会影响问答。在本地 `--cloud` 模式中，转发程序先检索本地案例库，再用当前问题的事件关键词查询 Google 新闻。外部请求只发送关键词，检索结果提供标题、发布方、日期和原文入口。模型会在有明确匹配或用户要求列举多件事时直接回答。用户明显指单一事件、而几个候选同样吻合且会改变结论时，才追问确认。
+
+浏览器只在当前页面内存中保留口令和对话。腾讯云函数校验口令，将消息转发到 DeepSeek，并把回答以 JSON 返回。网页用禁用原生 HTML 与图片的 Markdown 渲染器显示回答。本地的 `scripts/dev.cjs` 在回环地址提供交互站、测试页和相同的 API 处理器，默认在上游调用处返回模拟结果。接口自测位于 `tests/api.cjs`。GitHub Pages 问答直接请求腾讯云函数。外部检索当前由本地 `--cloud` 转发服务提供。
 
 ## 案例库
 
-每个案例一个 JSON，文件名使用小写字母、数字和连字符。新增案例时，在 `examples/index.json` 的 `cases` 中增加一项，其中 `id`、`title`、`tags` 与案例文件一致，`file` 填文件名。以现有三个案例为模板。
+案例库目前收录 20 个案例。每件事有独立目录，目录名与 `id` 相同，只用小写字母、数字和连字符。
+
+```text
+examples/
+  index.json
+  <id>/
+    case.json
+    media.json
+    background.jpg    # 图名依案例而定
+```
+
+`index.json` 使用 `schema_version: 2`。新增时，索引条目的 `id`、`title`、`tags`、`navigation` 与 `case.json` 一致。`file` 填 `<id>/case.json`，有配图时再填 `media` 为 `<id>/media.json`。这些路径相对 `examples/`。
 
 | 字段 | 内容 |
 | --- | --- |
 | `id`、`title`、`tags` | 唯一编号、课堂标题和主题标签 |
+| `navigation` | 导航用的 `title`（最多 7 字）和 `subtitle`（最多 15 字）。用正文里的动作或物件刻画人物，保留独立的完整案例标题供查找 |
 | `story` | 约 150–250 字的开场故事。含 `type`、`text`、`source_ids` |
+| `presentation` | 页面直接展示的讲稿。含 `event`（事件经过）和 `analysis`（理念解读），正文依据同文件的事实与原文 |
 | `context` | `time`、`location`、`project_type`、`background`、`source_ids` |
 | `facts` | 每条含 `id`、`text`、`source_ids`，口径与来源一致 |
 | `analysis` | 每条含 `concept`、`interpretation`、`fact_ids`，说明解读所依据的事实 |
@@ -26,6 +41,8 @@ flowchart LR
 | `notes` | 可选。记录待核实细节、人物区分或报道范围 |
 
 `source_ids` 指向同一文件中的 `sources[].id`，`fact_ids` 指向 `facts[].id`。确认报道区分了实际成果、计划和当事人表态。案例库随 Pages 公开发布。
+
+`media.json` 的 `images` 保存本地图片的 `file`、`caption`、`creator`、`license`、`license_url`、`source_url`、`width` 和 `height`。首图用作导航卡片封面，图片与 `case.json` 放在同一目录。`references` 保存原报道的配图入口，每条含 `label`、`source_id`、`source_url`。背景图需标明拍摄地点和报道事件的关系。
 
 ## 部署
 

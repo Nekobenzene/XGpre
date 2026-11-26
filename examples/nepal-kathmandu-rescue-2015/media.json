@@ -1,0 +1,22 @@
+{
+  "images": [
+    {
+      "source_url": "https://commons.wikimedia.org/wiki/File:Rescue_teams_search_earthquake-hit_Chautara,_Nepal_(16691227714).jpg",
+      "license": "CC BY 2.0",
+      "caption": "2015年尼泊尔地震后，救援人员在乔塔拉开展搜寻。此图为灾害背景，拍摄地与正文中的加德满都救援点不同。",
+      "license_url": "https://creativecommons.org/licenses/by/2.0",
+      "version": "Wikimedia Commons 960px 展示版",
+      "file": "nepal-earthquake-background.jpg",
+      "creator": "DFID - UK Department for International Development",
+      "width": 960,
+      "height": 640
+    }
+  ],
+  "references": [
+    {
+      "label": "查看报道配图｜救援人员从坍塌楼房抬出幸存者，白阳摄",
+      "source_id": "S1",
+      "source_url": "https://news.cntv.cn/2015/04/26/ARTI1430060775502544.shtml"
+    }
+  ]
+}

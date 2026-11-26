@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="referrer" content="no-referrer">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'self' https://1529785241-cw41hwjsxl.ap-guangzhou.tencentscf.com; base-uri 'none'; form-action 'none'">
-  <title>DeepSeek 对话</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://1529785241-cw41hwjsxl.ap-guangzhou.tencentscf.com; base-uri 'none'; form-action 'none'">
+  <title>国际援助案例与问答</title>
   <style>
     :root { color-scheme: light; --canvas:#f6f7f9; --surface:#fff; --text:#20242b; --muted:#5e6672; --line:#e2e5ea; --outline:#858f9c; --accent:#245de8; --tint:#edf2ff; --error:#b42318; --radius:8px; }
     * { box-sizing:border-box; }
@@ -33,6 +33,16 @@
     .hint { margin:8px 0 0; color:var(--muted); font-size:.8125rem; }
     .error { margin:8px 0 0; color:var(--error); font-size:.875rem; overflow-wrap:anywhere; }
     .conversation { position:relative; flex:1; min-height:0; overflow:auto; overscroll-behavior:contain; padding:24px; scroll-padding-block:24px; }
+    .modes { display:flex; gap:8px; padding:10px 16px; border-bottom:1px solid var(--line); }
+    .modes button[aria-pressed="true"] { background:var(--tint); color:#244797; border-color:var(--accent); }
+    .panel { flex:1; min-height:0; display:flex; flex-direction:column; }
+    .case-copy { max-width:64ch; overflow-wrap:anywhere; }
+    .case-copy h2 { font-size:1.25rem; margin:0 0 12px; }
+    .case-copy h3 { font-size:1rem; margin:20px 0 6px; }
+    .case-copy p { margin:0 0 12px; }
+    .case-copy figure { margin:16px 0; }
+    .case-copy img { display:block; max-width:100%; height:auto; }
+    .case-copy figcaption { font-size:.8125rem; color:var(--muted); margin-top:6px; }
     .cases { display:flex; align-items:center; flex-wrap:wrap; gap:8px; padding:10px 16px; border-bottom:1px solid var(--line); font-size:.875rem; }
     .cases select { font:inherit; color:var(--text); background:var(--surface); border:1px solid var(--outline); border-radius:6px; min-height:42px; max-width:100%; min-width:0; flex:1 1 180px; padding:6px 8px; }
     .cases p { flex-basis:100%; margin:0; }
@@ -44,8 +54,20 @@
     .message.user { max-width:85%; margin-left:auto; padding:12px 16px; border-radius:var(--radius); background:var(--tint); }
     .message.user .message-label { color:#405987; }
     .message.thinking .message-content { color:var(--muted); }
+    .markdown { white-space:normal; }
+    .markdown > :first-child { margin-top:0; }
+    .markdown > :last-child { margin-bottom:0; }
+    .markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5, .markdown h6 { font-size:1rem; margin:16px 0 6px; }
+    .markdown p, .markdown ul, .markdown ol, .markdown table, .markdown pre { margin:8px 0 12px; }
+    .markdown blockquote { margin:8px 0; padding:0 12px; border-left:3px solid var(--line); color:var(--muted); }
+    .markdown code { background:var(--canvas); padding:2px 4px; border-radius:4px; }
+    .markdown pre { overflow:auto; background:var(--canvas); padding:12px; border-radius:6px; }
+    .markdown pre code { padding:0; }
+    .markdown table { display:block; max-width:100%; overflow:auto; border-collapse:collapse; }
+    .markdown th, .markdown td { border:1px solid var(--line); padding:4px 8px; text-align:left; }
     .composer { padding:16px 24px 20px; border-top:1px solid var(--line); }
     .composer label { display:block; font-size:.875rem; font-weight:600; margin-bottom:8px; }
+    .web-keywords { margin-bottom:10px; }
     .compose-row { display:flex; align-items:flex-end; gap:12px; }
     textarea { display:block; width:100%; min-height:84px; max-height:200px; resize:vertical; padding:10px 12px; line-height:1.6; border:1px solid var(--outline); border-radius:6px; background:var(--surface); color:var(--text); }
     textarea:disabled { background:#f6f7f9; }
@@ -67,14 +89,32 @@
   </style>
 </head>
 <body>
-  <main class="chat" aria-label="DeepSeek 聊天窗口">
+  <main class="chat" aria-label="国际援助案例与问答">
     <header class="header">
-      <h1>DeepSeek 对话</h1>
-      <div class="tools">
+      <h1>国际援助案例与问答</h1>
+      <div id="chat-tools" class="tools" hidden>
         <button id="new-chat" type="button" disabled>新对话</button>
         <button id="lock" type="button" hidden>锁定</button>
       </div>
     </header>
+    <div class="modes" role="group" aria-label="阅读或提问">
+      <button id="show-cases" type="button" aria-pressed="true" aria-controls="case-panel">内置案例</button>
+      <button id="show-chat" type="button" aria-pressed="false" aria-controls="chat-panel">AI 问答</button>
+    </div>
+    <section id="case-panel" class="panel" aria-label="内置案例">
+      <div class="cases">
+        <label for="case-select">案例</label>
+        <select id="case-select" disabled>
+          <option value="">选择一个案例</option>
+        </select>
+        <p id="case-error" class="error" role="alert" hidden></p>
+      </div>
+      <div id="case-scroll" class="conversation">
+        <p id="case-status" class="hint" role="status">正在加载案例目录…</p>
+        <article id="case-copy" class="case-copy" hidden></article>
+      </div>
+    </section>
+    <section id="chat-panel" class="panel" aria-label="AI 事件问答" hidden>
     <form id="connection" class="connection">
       <label for="access-code">演示口令</label>
       <div class="credentials">
@@ -84,30 +124,28 @@
       <p id="code-hint" class="hint">口令由页面所有者提供。</p>
       <p id="code-error" class="error" role="alert" hidden></p>
     </form>
-    <div class="cases">
-      <label for="case-select">案例</label>
-      <select id="case-select" disabled>
-        <option value="">选择一个案例</option>
-      </select>
-      <button id="explain-case" type="button" disabled>讲解案例</button>
-      <p id="case-error" class="error" role="alert" hidden></p>
-    </div>
     <section id="conversation" class="conversation" aria-label="对话记录" role="log" aria-live="polite" aria-relevant="additions text">
-      <p id="empty" class="empty">对话将在这里显示</p>
+      <p id="empty" class="empty">输入事件名称、时间或地点，向 AI 提问。</p>
     </section>
     <form id="composer" class="composer">
-      <label for="prompt">消息</label>
+      <div class="web-keywords" id="web-keywords-row" hidden>
+        <label for="web-keywords">公开检索关键词（可选，发送至 Google 新闻）</label>
+        <input id="web-keywords" maxlength="100" placeholder="如：2023 土耳其地震 中国救援队">
+      </div>
+      <label for="prompt">事件或追问</label>
       <div class="compose-row">
-        <textarea id="prompt" rows="2" maxlength="6000" disabled placeholder="输入你的问题" aria-describedby="chat-error"></textarea>
+        <textarea id="prompt" rows="2" maxlength="6000" disabled placeholder="例如：中国参与了哪些2023年土耳其地震救援行动？" aria-describedby="chat-error"></textarea>
         <button id="send" class="primary send" type="submit" disabled>发送</button>
       </div>
       <p id="chat-error" class="error" role="alert" hidden></p>
       <div class="composer-note">
-        <span>AI 回答可能有误，请核实重要信息。</span>
+        <span id="search-note">AI 回答可能有误，请核实重要信息。</span>
         <span class="keyboard-hint">Enter 发送 · Shift + Enter 换行</span>
       </div>
     </form>
+    </section>
   </main>
+  <script src="./vendor/markdown-it.min.js"></script>
   <script>
     'use strict';
     (() => {
@@ -120,11 +158,35 @@
       const codeError = $('code-error'), chatError = $('chat-error'), composer = $('composer');
       const conversation = $('conversation'), empty = $('empty'), prompt = $('prompt');
       const send = $('send'), newChat = $('new-chat'), lock = $('lock');
-      const caseSelect = $('case-select'), explainCase = $('explain-case'), caseError = $('case-error');
+      const webKeywords = $('web-keywords');
+      const webKeywordsRow = $('web-keywords-row');
+      const showCases = $('show-cases'), showChat = $('show-chat');
+      const casePanel = $('case-panel'), chatPanel = $('chat-panel'), chatTools = $('chat-tools');
+      const caseSelect = $('case-select'), caseError = $('case-error'), caseCopy = $('case-copy');
+      const caseScroll = $('case-scroll'), caseStatus = $('case-status');
       const cases = new Map();
       const encoder = new TextEncoder();
+      const markdown = typeof window.markdownit === 'function'
+        ? window.markdownit({ html: false, breaks: true }).disable('image')
+        : null;
+      if (markdown) {
+        markdown.validateLink = url => /^https?:\/\//i.test(url);
+        markdown.renderer.rules.link_open = (tokens, index, options, _env, renderer) => {
+          tokens[index].attrSet('target', '_blank');
+          tokens[index].attrSet('rel', 'noopener noreferrer');
+          return renderer.renderToken(tokens, index, options);
+        };
+      }
+      const eventInstructions = [
+        '你是习概课汇报的资料助手，主题为新时代的中国外交，聚焦中国参与的国际援助与人道合作。用中文回答用户指定的事件和追问。',
+        '收到问题直接处理，先看本轮检索线索和对话上下文。最符合的是一个事件，就直接讲；用户明确要列举、多举例或比较时，直接给出多个相关事件。仅当用户明显在指某一个事件，且检索后仍有两个或更多同样吻合的候选、选错会改变答案时，列出两三个候选，问一句是哪件事。其余情况按最合理的理解回答，必要时一句话交代采用的理解。',
+        '事件明确且信息足够时，用“事件概况”“援助行动与结果”“理念解读”三个短段落组织首次讲解，约300至450字。具体追问直接回答，并采用当前对话中已经确认的事件信息。',
+        '交代时间、地点、当事方、需求、行动和已知结果。区分政府、民间组织、企业与国际机构的角色。仅在有依据时判定项目属于无偿援助、技术合作、人道救援、贷款或其他合作形式。',
+        '将事实、当事方表态和分析分开。理念解读选择一到两个与行动直接相关的观点，逐一说明事实依据。把承诺、计划、实际交付和公开报道的结果分别表述。单一案例不足以支持的成效或因果结论留作待核实。',
+        '用明确、自然的语气，把答案放在前面。只指出影响结论的关键不确定性，避免反复提示、质疑或要求用户补资料。检索线索和用户给出的资料可以据实引用；仅凭新闻标题不能确认报道正文的细节。没有检索线索时，按有把握的知识直接答，不编造故事、引语、链接、出处或数据，也不冒称查证过。'
+      ].join('\n');
       let accessCode = '', history = [], pending = null;
-      let activeCase = null;
+      let caseLoad = null;
 
       function showError(element, message = '') {
         element.textContent = message;
@@ -132,20 +194,19 @@
       }
       function updateControls() {
         prompt.disabled = !accessCode;
+        webKeywords.disabled = !accessCode;
         send.disabled = !accessCode || (!pending && !prompt.value.trim());
         send.textContent = pending ? '停止' : '发送';
         send.setAttribute('aria-label', pending ? '停止等待回答' : '发送消息');
         newChat.disabled = Boolean(pending) || !history.length;
         lock.disabled = Boolean(pending);
-        caseSelect.disabled = Boolean(pending) || !cases.size;
-        explainCase.disabled = Boolean(pending) || !accessCode || !cases.has(caseSelect.value);
       }
       function resetChat() {
         history = [];
-        activeCase = null;
         conversation.replaceChildren(empty);
         empty.hidden = false;
         prompt.value = '';
+        webKeywords.value = '';
         showError(chatError);
         updateControls();
       }
@@ -155,7 +216,7 @@
         const label = document.createElement('p');
         label.className = 'message-label';
         label.textContent = role === 'user' ? '你' : 'DeepSeek';
-        const content = document.createElement('p');
+        const content = document.createElement(role === 'assistant' ? 'div' : 'p');
         content.className = 'message-content';
         content.textContent = text;
         article.append(label, content);
@@ -184,23 +245,115 @@
         try {
           const index = await readCaseJson('index.json', AbortSignal.timeout(15000));
           for (const entry of index.cases) {
-            cases.set(entry.id, entry.file);
-            caseSelect.add(new Option(entry.title, entry.id));
+            cases.set(entry.id, entry);
+            const label = entry.navigation
+              ? entry.navigation.title + '｜' + entry.navigation.subtitle
+              : entry.title;
+            caseSelect.add(new Option(label, entry.id));
           }
-          updateControls();
+          caseSelect.disabled = !cases.size;
+          caseStatus.textContent = cases.size ? '请选择一个案例。' : '暂无内置案例。';
         } catch {
+          caseStatus.textContent = '';
           showError(caseError, '案例目录加载失败，请刷新页面重试。');
         }
       }
-      function caseInstructions(caseData) {
-        return [
-          '你在协助一场主题为“新时代的中国外交”、方向为“国际援助”的习概课汇报。',
-          '首次讲解时，用故事中一个具体场景开头，然后交代援助背景、参与方、行动与结果，最后用可核实事实解释一到两个外交理念或合作原则。',
-          '用适合课堂口述的中文写约400字。事实处标注来源编号（如 [S1]），结尾列出引用的来源标题。后续追问继续以本案例材料为依据。',
-          '区分报道事实、人物表态和你的解读。尊重背景与范围说明，不增添对白、日期、因果、数据或未经证实的后续进展。材料不足时直接说明。',
-          JSON.stringify(caseData)
-        ].join('\n');
+      function appendText(parent, tag, text) {
+        const element = document.createElement(tag);
+        element.textContent = text;
+        parent.append(element);
+        return element;
       }
+      function renderCase(data, media) {
+        caseCopy.replaceChildren();
+        appendText(caseCopy, 'h2', data.title);
+        if (data.navigation?.subtitle) appendText(caseCopy, 'p', data.navigation.subtitle);
+        appendText(caseCopy, 'h3', '小故事');
+        appendText(caseCopy, 'p', data.story.text);
+        appendText(caseCopy, 'h3', '事件经过');
+        appendText(caseCopy, 'p', data.presentation.event);
+        appendText(caseCopy, 'h3', '理念解读');
+        appendText(caseCopy, 'p', data.presentation.analysis);
+        appendText(caseCopy, 'h3', '资料来源');
+        const sources = document.createElement('ul');
+        for (const source of data.sources) {
+          const item = document.createElement('li');
+          const link = appendText(item, 'a', source.title);
+          if (/^https?:\/\//i.test(source.url)) {
+            link.href = source.url;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+          }
+          appendText(item, 'span', ' · ' + source.publisher + ' · ' + source.date);
+          sources.append(item);
+        }
+        caseCopy.append(sources);
+        for (const reference of media?.references || []) {
+          if (!/^https?:\/\//i.test(reference.source_url)) continue;
+          const photo = appendText(caseCopy, 'p', '');
+          const link = appendText(photo, 'a', reference.label);
+          link.href = reference.source_url;
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+        }
+        for (const image of media?.images || []) {
+          if (!/^[a-z0-9-]+\.(?:jpg|png|webp)$/.test(image.file)) continue;
+          const figure = document.createElement('figure');
+          const picture = document.createElement('img');
+          picture.src = '../examples/' + data.id + '/' + image.file;
+          picture.alt = image.caption;
+          picture.loading = 'lazy';
+          figure.append(picture);
+          const caption = appendText(figure, 'figcaption',
+            [image.caption, image.creator, image.license].filter(Boolean).join(' · '));
+          if (/^https?:\/\//i.test(image.source_url)) {
+            const link = appendText(caption, 'a', ' 查看原图与许可');
+            link.href = image.source_url;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+          }
+          caseCopy.append(figure);
+        }
+        caseCopy.hidden = false;
+        caseScroll.scrollTop = 0;
+      }
+      async function selectCase() {
+        caseLoad?.abort();
+        caseLoad = null;
+        caseCopy.hidden = true;
+        showError(caseError);
+        const entry = cases.get(caseSelect.value);
+        caseStatus.textContent = entry ? '正在加载案例…' : '请选择一个案例。';
+        if (!entry) return;
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 15000);
+        caseLoad = controller;
+        try {
+          const [data, media] = await Promise.all([
+            readCaseJson(entry.file, controller.signal),
+            entry.media ? readCaseJson(entry.media, controller.signal).catch(() => null) : null
+          ]);
+          if (caseLoad === controller) renderCase(data, media);
+        } catch {
+          if (caseLoad === controller) showError(caseError, '案例加载失败，请重新选择。');
+        } finally {
+          clearTimeout(timer);
+          if (caseLoad === controller) {
+            caseStatus.textContent = '';
+            caseLoad = null;
+          }
+        }
+      }
+      function switchMode(chatMode) {
+        casePanel.hidden = chatMode;
+        chatPanel.hidden = !chatMode;
+        chatTools.hidden = !chatMode;
+        showCases.setAttribute('aria-pressed', String(!chatMode));
+        showChat.setAttribute('aria-pressed', String(chatMode));
+      }
+      showCases.addEventListener('click', () => switchMode(false));
+      showChat.addEventListener('click', () => switchMode(true));
+      caseSelect.addEventListener('change', selectCase);
       connection.addEventListener('submit', async event => {
         event.preventDefault();
         if (connect.disabled) return;
@@ -224,7 +377,7 @@
           connection.hidden = true;
           lock.hidden = false;
           updateControls();
-          prompt.focus();
+          if (!chatPanel.hidden) prompt.focus();
         } catch (error) {
           showError(codeError, controller.signal.aborted ? '连接超时，请重试。' :
             error instanceof TypeError ? '连接失败，请检查网络后重试。' : error.message);
@@ -234,7 +387,7 @@
           connect.disabled = false;
           codeInput.disabled = false;
           connect.textContent = '连接';
-          if (!connection.hidden) codeInput.focus();
+          if (!chatPanel.hidden && !connection.hidden) codeInput.focus();
         }
       });
       prompt.addEventListener('input', updateControls);
@@ -254,56 +407,68 @@
         const text = prompt.value.trim();
         if (text) sendMessage(text);
       });
-      caseSelect.addEventListener('change', updateControls);
-      explainCase.addEventListener('click', () => {
-        const file = cases.get(caseSelect.value);
-        if (file) sendMessage('请讲解这个案例。', file);
-      });
-      async function sendMessage(text, caseFile) {
+      async function sendMessage(text) {
         if (!accessCode || pending) return;
         showError(chatError);
         let userMessage, assistantMessage;
-        if (!caseFile) prompt.value = '';
+        const keywords = webKeywordsRow.hidden ? '' : webKeywords.value.trim();
+        prompt.value = '';
+        webKeywords.value = '';
         const controller = new AbortController();
         pending = controller;
         let timedOut = false;
         const timer = setTimeout(() => { timedOut = true; controller.abort(); }, 110000);
         updateControls();
         try {
-          let caseData = activeCase;
-          if (caseFile) {
-            try { caseData = await readCaseJson(caseFile, controller.signal); }
-            catch (error) {
-              if (controller.signal.aborted) throw error;
-              throw new Error('案例材料加载失败，请再次点击“讲解案例”。');
-            }
-          }
-          const context = caseFile ? [] : history.slice();
-          const instructions = caseData ? [{ role: 'system', content: caseInstructions(caseData) }] : [];
+          const context = history.slice();
+          const instructions = { role: 'system', content: eventInstructions };
           const body = { messages: [], stream: false, max_tokens: 1024 };
+          if (keywords) body.search_keywords = keywords;
           const current = { role: 'user', content: text };
           for (;;) {
-            body.messages = [...instructions, ...context, current];
+            body.messages = [instructions, ...context, current];
             const chars = body.messages.reduce((sum, item) => sum + item.content.length, 0);
             if (body.messages.length <= 40 && chars <= 24000 && encoder.encode(JSON.stringify(body)).length <= 65536) break;
-            if (!context.length) throw new Error('本次消息和案例材料过长，请缩短消息再试。');
+            if (!context.length) throw new Error('本次消息过长，请缩短后再试。');
             context.splice(0, 2);
           }
-          const display = caseFile ? '讲解案例 · ' + caseData.title + '\n\n' + caseData.story.text : text;
-          userMessage = message('user', display);
+          userMessage = message('user', text);
           assistantMessage = message('assistant', '正在思考…', true);
           const { response, data } = await request(body, accessCode, controller.signal);
           if (!response.ok) throw Object.assign(new Error(data.error || '发送失败，请稍后重试。'), { status: response.status });
           if (typeof data.reply !== 'string') throw new Error('回答格式异常，请重新发送。');
           history = [...context, current, { role: 'assistant', content: data.reply }];
-          activeCase = caseData;
-          assistantMessage.content.textContent = data.reply;
+          if (markdown) {
+            assistantMessage.content.classList.add('markdown');
+            // markdown-it escapes raw HTML and the link policy only permits HTTP(S).
+            assistantMessage.content.innerHTML = markdown.render(data.reply);
+          } else {
+            assistantMessage.content.textContent = data.reply;
+          }
+          if (Array.isArray(data.search_sources) && data.search_sources.length) {
+            const details = document.createElement('details');
+            appendText(details, 'summary', '本次检索线索');
+            const list = document.createElement('ol');
+            for (const source of data.search_sources) {
+              const item = document.createElement('li');
+              const link = appendText(item, 'a', source.title);
+              if (/^https?:\/\//i.test(source.url)) {
+                link.href = source.url;
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+              }
+              list.append(item);
+            }
+            details.append(list);
+            assistantMessage.article.append(details);
+          }
           assistantMessage.article.classList.remove('thinking');
           conversation.scrollTop = conversation.scrollHeight;
         } catch (error) {
           userMessage?.article.remove();
           assistantMessage?.article.remove();
-          if (!caseFile && !prompt.value) prompt.value = text;
+          if (!prompt.value) prompt.value = text;
+          if (!webKeywords.value) webKeywords.value = keywords;
           if (!history.length) empty.hidden = false;
           showError(chatError, controller.signal.aborted ? (timedOut ? '等待回答超时，可以重新发送。' : '已停止等待。') :
             error instanceof TypeError ? '发送失败，请检查网络后重试。' : error.message);
@@ -317,7 +482,7 @@
           clearTimeout(timer);
           pending = null;
           updateControls();
-          (accessCode ? prompt : codeInput).focus();
+          if (!chatPanel.hidden) (accessCode ? prompt : codeInput).focus();
         }
       }
       newChat.addEventListener('click', () => { resetChat(); prompt.focus(); });

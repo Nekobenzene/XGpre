@@ -1,0 +1,22 @@
+{
+  "images": [
+    {
+      "file": "antakya-after-earthquake.jpg",
+      "caption": "2023年地震后的哈塔伊省安塔基亚市航拍。图中可见同一场地震造成的建筑破坏。",
+      "creator": "Orhan Erkılıç / 美国之音",
+      "license": "Public domain",
+      "license_url": "https://commons.wikimedia.org/wiki/File:City_of_Antakya_after_7.8_magnitude_earthquake_in_T%C3%BCrkiye.jpg",
+      "source_url": "https://commons.wikimedia.org/wiki/File:City_of_Antakya_after_7.8_magnitude_earthquake_in_T%C3%BCrkiye.jpg",
+      "version": "Wikimedia Commons 960px 展示版",
+      "width": 960,
+      "height": 540
+    }
+  ],
+  "references": [
+    {
+      "label": "查看报道配图｜哈塔伊废墟搜救现场，沙达提摄",
+      "source_id": "S1",
+      "source_url": "https://www.news.cn/world/2023-02/09/c_1129350315.htm"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; script-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; connect-src 'self' https://1529785241-cw41hwjsxl.ap-guangzhou.tencentscf.com">
+  <title>AI 问答 · 新时代国际援助</title>
+  <link rel="stylesheet" href="../site.css">
+  <script defer src="../../demo/vendor/markdown-it.min.js"></script>
+  <script defer src="../chat.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">跳到主要内容</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">新时代国际援助</a>
+      <nav aria-label="主导航">
+        <a href="https://nekobenzene.github.io/XGpre/">讲稿</a>
+        <a href="../">案例库</a>
+        <a href="../ask/" aria-current="page">AI 问答</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main" class="wrap ask">
+  <header class="ask-heading">
+    <h1>AI 问答</h1>
+    <div class="chat-tools">
+      <button class="control" id="new-chat" type="button" disabled>新对话</button>
+      <button class="control" id="lock" type="button" hidden>断开连接</button>
+    </div>
+  </header>
+  <section class="chat-panel" aria-label="事件问答">
+    <form id="connection" class="connection">
+      <label for="access-code">演示口令</label>
+      <div class="credentials">
+        <input id="access-code" type="password" minlength="12" maxlength="256" required autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="code-hint code-error" placeholder="输入演示口令">
+        <button id="connect" class="control primary" type="submit">连接</button>
+      </div>
+      <p id="code-hint" class="hint">口令由页面所有者提供。</p>
+      <p id="code-error" class="error" role="alert" hidden></p>
+    </form>
+    <section id="conversation" class="conversation" aria-label="对话记录" role="log" tabindex="0" aria-live="polite" aria-relevant="additions text">
+      <p id="empty" class="empty">输入事件名称、时间或地点，向 AI 提问。</p>
+    </section>
+    <form id="composer" class="composer">
+      <div class="web-keywords" id="web-keywords-row" hidden>
+        <label for="web-keywords">公开检索关键词（可选，发送至 Google 新闻）</label>
+        <input id="web-keywords" maxlength="100" placeholder="如：2023 土耳其地震 中国救援队">
+      </div>
+      <label for="prompt">事件或追问</label>
+      <div class="compose-row">
+        <textarea id="prompt" rows="2" maxlength="6000" disabled placeholder="例如，2023 年中国如何参与土耳其地震救援？" aria-describedby="chat-error"></textarea>
+        <button id="send" class="control primary" type="submit" disabled>发送</button>
+      </div>
+      <p id="chat-error" class="error" role="alert" hidden></p>
+      <div class="composer-note">
+        <span id="search-note">AI 回答可能有误，请核实重要信息。</span>
+        <span class="keyboard-hint">Enter 发送 · Shift + Enter 换行</span>
+      </div>
+    </form>
+  </section>
+  <noscript>启用 JavaScript 后即可使用 AI 问答。</noscript>
+</main>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "images": [
+    {
+      "file": "suva-harbour.jpg",
+      "caption": "2015年斐济苏瓦港全景。图为“丝路方舟”赴斐济提供医疗服务的港口背景。",
+      "creator": "Matthias Süßen",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Suvahafenpano.jpg",
+      "version": "Wikimedia Commons 960px 展示版",
+      "width": 960,
+      "height": 254
+    }
+  ],
+  "references": [
+    {
+      "label": "查看报道配图｜医院船航次影像，部分照片为其他到访国",
+      "source_id": "S1",
+      "source_url": "http://www.mod.gov.cn/gfbw/jsxd/16458579.html"
+    }
+  ]
+}

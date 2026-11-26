@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "cases": [
     {
       "id": "philippines-haiyan-2013",
@@ -9,7 +9,12 @@
         "民间力量",
         "跨国志愿协作"
       ],
-      "file": "philippines-haiyan-2013.json"
+      "navigation": {
+        "title": "彩虹围巾",
+        "subtitle": "夏飞和本杰明雨林寻亲"
+      },
+      "file": "philippines-haiyan-2013/case.json",
+      "media": "philippines-haiyan-2013/media.json"
     },
     {
       "id": "sierra-leone-ebola-2014",
@@ -19,7 +24,12 @@
         "埃博拉疫情",
         "中非合作"
       ],
-      "file": "sierra-leone-ebola-2014.json"
+      "navigation": {
+        "title": "病房里的舞",
+        "subtitle": "妮可康复出院前的告别"
+      },
+      "file": "sierra-leone-ebola-2014/case.json",
+      "media": "sierra-leone-ebola-2014/media.json"
     },
     {
       "id": "tonga-laparoscopy-2025",
@@ -29,7 +39,250 @@
         "南太平洋",
         "技术转移"
       ],
-      "file": "tonga-laparoscopy-2025.json"
+      "navigation": {
+        "title": "她选择微创",
+        "subtitle": "萨劳特接受汤加首例妇科腹腔镜"
+      },
+      "file": "tonga-laparoscopy-2025/case.json",
+      "media": "tonga-laparoscopy-2025/media.json"
+    },
+    {
+      "id": "turkiye-hatay-rescue-2023",
+      "title": "中国与土耳其救援人员联合营救被困孕妇",
+      "tags": [
+        "灾害救援",
+        "联合人道救援"
+      ],
+      "navigation": {
+        "title": "担架接力",
+        "subtitle": "哈塔伊废墟里的联合营救"
+      },
+      "file": "turkiye-hatay-rescue-2023/case.json",
+      "media": "turkiye-hatay-rescue-2023/media.json"
+    },
+    {
+      "id": "nepal-kathmandu-rescue-2015",
+      "title": "尼泊尔地震后中国国际救援队救出首名幸存者",
+      "tags": [
+        "灾害救援",
+        "应请求提供紧急支援"
+      ],
+      "navigation": {
+        "title": "抬出废墟",
+        "subtitle": "加德满都四小时搜救"
+      },
+      "file": "nepal-kathmandu-rescue-2015/case.json",
+      "media": "nepal-kathmandu-rescue-2015/media.json"
+    },
+    {
+      "id": "mozambique-idai-medical-2019",
+      "title": "热带气旋“伊代”过后中国救援队在莫桑比克诊治防疫",
+      "tags": [
+        "灾害救援",
+        "按灾区需求调整人道援助"
+      ],
+      "navigation": {
+        "title": "下机就集结",
+        "subtitle": "朱伟带队驰援莫桑比克"
+      },
+      "file": "mozambique-idai-medical-2019/case.json",
+      "media": "mozambique-idai-medical-2019/media.json"
+    },
+    {
+      "id": "tonga-volcano-sealift-2022",
+      "title": "汤加火山灾后中国舰艇海运并移交救灾物资",
+      "tags": [
+        "灾害救援",
+        "应急援助的交付能力"
+      ],
+      "navigation": {
+        "title": "甲板上的班",
+        "subtitle": "刘兆强参与卸载援汤物资"
+      },
+      "file": "tonga-volcano-sealift-2022/case.json",
+      "media": "tonga-volcano-sealift-2022/media.json"
+    },
+    {
+      "id": "myanmar-mandalay-rescue-2025",
+      "title": "缅甸地震后中国救援队赶赴曼德勒长城饭店施救",
+      "tags": [
+        "灾害救援",
+        "跨境救援中的应变与协作"
+      ],
+      "navigation": {
+        "title": "在大巴过夜",
+        "subtitle": "中国救援队连夜赶赴曼德勒"
+      },
+      "file": "myanmar-mandalay-rescue-2025/case.json",
+      "media": "myanmar-mandalay-rescue-2025/media.json"
+    },
+    {
+      "id": "laos-sathala-heart-2024",
+      "title": "老挝先心病患儿萨塔拉赴云南就诊",
+      "tags": [
+        "医疗卫生",
+        "医疗救助的可及性与民心相通"
+      ],
+      "navigation": {
+        "title": "画一颗心",
+        "subtitle": "萨塔拉的出院礼物"
+      },
+      "file": "laos-sathala-heart-2024/case.json",
+      "media": "laos-sathala-heart-2024/media.json"
+    },
+    {
+      "id": "cambodia-roskeal-eyecare-2017",
+      "title": "“海南柬埔寨光明行”为暹粒高龄患者实施复明手术",
+      "tags": [
+        "医疗卫生",
+        "医疗援助中的照料与合作"
+      ],
+      "navigation": {
+        "title": "手术台上的手",
+        "subtitle": "九十七岁老人握住医生"
+      },
+      "file": "cambodia-roskeal-eyecare-2017/case.json",
+      "media": "cambodia-roskeal-eyecare-2017/media.json"
+    },
+    {
+      "id": "silkroad-ark-fiji-2025",
+      "title": "“丝路方舟”在斐济为患者提供船上医疗服务",
+      "tags": [
+        "医疗卫生",
+        "跨境医疗服务的可及性"
+      ],
+      "navigation": {
+        "title": "一声谢谢",
+        "subtitle": "斐济患者用中文感谢医生"
+      },
+      "file": "silkroad-ark-fiji-2025/case.json",
+      "media": "silkroad-ark-fiji-2025/media.json"
+    },
+    {
+      "id": "zimbabwe-sunshuang-2020",
+      "title": "湖南抗疫专家组在津巴布韦交流疫情应对经验",
+      "tags": [
+        "医疗卫生",
+        "卫生援助中的技术交流与本地适配"
+      ],
+      "navigation": {
+        "title": "行李里的模型",
+        "subtitle": "孙爽带穴位模型援非"
+      },
+      "file": "zimbabwe-sunshuang-2020/case.json",
+      "media": "zimbabwe-sunshuang-2020/media.json"
+    },
+    {
+      "id": "malawi-kadidi-clinic-2018",
+      "title": "第六批中国援马拉维医疗队在卡迪迪村义诊",
+      "tags": [
+        "医疗卫生",
+        "基层卫生服务与健康教育"
+      ],
+      "navigation": {
+        "title": "彼得的食指",
+        "subtitle": "高王军走进卡迪迪村义诊"
+      },
+      "file": "malawi-kadidi-clinic-2018/case.json",
+      "media": "malawi-kadidi-clinic-2018/media.json"
+    },
+    {
+      "id": "tunisia-medical-relay-2019",
+      "title": "雷晓真、戴书明接力参与中国援突尼斯医疗",
+      "tags": [
+        "医疗卫生",
+        "持续医疗援助与人才培养"
+      ],
+      "navigation": {
+        "title": "夫妻接力",
+        "subtitle": "雷晓真和戴书明先后援突"
+      },
+      "file": "tunisia-medical-relay-2019/case.json",
+      "media": "tunisia-medical-relay-2019/media.json"
+    },
+    {
+      "id": "png-goroka-juncao-2020",
+      "title": "中国菌草技术支持巴新东高地省家庭种菇",
+      "tags": [
+        "农业技术",
+        "技术援助支持家庭生计"
+      ],
+      "navigation": {
+        "title": "她开始种菇",
+        "subtitle": "扎卡阿博里在戈罗卡试种"
+      },
+      "file": "png-goroka-juncao-2020/case.json",
+      "media": "png-goroka-juncao-2020/media.json"
+    },
+    {
+      "id": "rwanda-juncao-entrepreneur-2023",
+      "title": "卢旺达菌草技术学员伯瑟德创办企业并培训农户",
+      "tags": [
+        "农业技术",
+        "从技术示范到本地人才带动"
+      ],
+      "navigation": {
+        "title": "她教人种菇",
+        "subtitle": "伯瑟德从学员到培训者"
+      },
+      "file": "rwanda-juncao-entrepreneur-2023/case.json",
+      "media": "rwanda-juncao-entrepreneur-2023/media.json"
+    },
+    {
+      "id": "fiji-kabukabu-juncao-2019",
+      "title": "卡布卡布在斐济带动当地妇女学习菌草种菇",
+      "tags": [
+        "农业技术",
+        "赋能女性与社区自主发展"
+      ],
+      "navigation": {
+        "title": "第一笔菇钱",
+        "subtitle": "卡布卡布带姐妹种菌菇"
+      },
+      "file": "fiji-kabukabu-juncao-2019/case.json",
+      "media": "fiji-kabukabu-juncao-2019/media.json"
+    },
+    {
+      "id": "burundi-linge-rice-2018",
+      "title": "中国农业专家协助布隆迪林格四村推广杂交水稻",
+      "tags": [
+        "农业技术",
+        "产业减贫与培养当地技术带头人"
+      ],
+      "navigation": {
+        "title": "饭碗到米厂",
+        "subtitle": "约翰在林格四村种出新生计"
+      },
+      "file": "burundi-linge-rice-2018/case.json",
+      "media": "burundi-linge-rice-2018/media.json"
+    },
+    {
+      "id": "uganda-anastasia-rice-fish-2024",
+      "title": "粮农组织、中国与乌干达支持布塔莱贾农户改善种养",
+      "tags": [
+        "农业技术",
+        "用本地条件落实多边南南合作"
+      ],
+      "navigation": {
+        "title": "蜗牛喂鱼",
+        "subtitle": "安娜斯塔西娅学会省饲料"
+      },
+      "file": "uganda-anastasia-rice-fish-2024/case.json",
+      "media": "uganda-anastasia-rice-fish-2024/media.json"
+    },
+    {
+      "id": "cameroon-village-tv-2022",
+      "title": "援非“万村通”在喀麦隆第汝那村提供公共电视服务",
+      "tags": [
+        "民生服务",
+        "面向社区的信息可及性"
+      ],
+      "navigation": {
+        "title": "进球就拥抱",
+        "subtitle": "恩东戈在村里看非洲杯"
+      },
+      "file": "cameroon-village-tv-2022/case.json",
+      "media": "cameroon-village-tv-2022/media.json"
     }
   ]
 }

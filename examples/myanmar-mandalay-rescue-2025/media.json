@@ -1,0 +1,22 @@
+{
+  "images": [
+    {
+      "source_url": "https://commons.wikimedia.org/wiki/File:2025_Myanmar_earthquake_damage_in_Mandalay.png",
+      "license": "CC BY 4.0",
+      "caption": "2025年缅甸地震后的曼德勒受损建筑。图片用于交代灾害背景。",
+      "license_url": "https://creativecommons.org/licenses/by/4.0",
+      "version": "Wikimedia Commons 960px 展示版",
+      "file": "mandalay-earthquake-damage.png",
+      "creator": "China News Service",
+      "width": 960,
+      "height": 540
+    }
+  ],
+  "references": [
+    {
+      "label": "查看报道配图｜长城饭店救援现场，才扬摄",
+      "source_id": "S1",
+      "source_url": "https://www.xinhuanet.com/world/20250401/1e5a29ba8eca4f95ae8be2538c27306f/c.html"
+    }
+  ]
+}

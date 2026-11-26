@@ -1,0 +1,22 @@
+{
+  "images": [
+    {
+      "file": "burundi-rice-farm.jpg",
+      "caption": "布隆迪的一处稻田。图为该国水稻种植背景，正文的杂交水稻示范项目位于林格四村。",
+      "creator": "IRRI Images",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Rice_farm_-_Burundi_(1).jpg",
+      "version": "Wikimedia Commons 960px 展示版",
+      "width": 960,
+      "height": 720
+    }
+  ],
+  "references": [
+    {
+      "label": "查看报道配图｜中国农业专家和村民分享水稻丰收，吴培洋摄；照片摄于鲁卡拉姆垦区",
+      "source_id": "S1",
+      "source_url": "http://www.cidca.gov.cn/2024-02/18/c_1212334622.htm"
+    }
+  ]
+}
