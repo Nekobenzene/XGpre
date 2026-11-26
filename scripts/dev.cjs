@@ -6,7 +6,11 @@ const path = require('node:path');
 const { createHandler } = require('../cloud-function/app.js');
 
 const root = path.resolve(__dirname, '..');
-const port = 8080;
+const port = Number(process.env.XGPRE_DEV_PORT || '8080');
+if (!Number.isInteger(port) || port < 1 || port > 65535) {
+  console.error('XGPRE_DEV_PORT 必须是 1–65535 之间的整数。');
+  process.exit(1);
+}
 const origin = 'http://127.0.0.1:' + port;
 const live = process.argv.includes('--live');
 const mockCode = 'local-demo-code';
@@ -36,6 +40,8 @@ const handleApi = createHandler({ env, fetchUpstream });
 const files = new Map([
   ['/', 'index.html'],
   ['/index.html', 'index.html'],
+  ['/demo/', 'demo/index.html'],
+  ['/demo/index.html', 'demo/index.html'],
   ['/examples/index.json', 'examples/index.json']
 ]);
 const index = JSON.parse(fs.readFileSync(path.join(root, 'examples', 'index.json'), 'utf8'));
@@ -46,6 +52,10 @@ for (const entry of index.cases) {
 
 const server = http.createServer((req, res) => {
   const route = req.url.split('?')[0];
+  if (route === '/demo' && (req.method === 'GET' || req.method === 'HEAD')) {
+    res.writeHead(302, { Location: '/demo/' }).end();
+    return;
+  }
   if (['/chat', '/health', '/v1/chat/completions'].includes(route)) {
     return handleApi(req, res);
   }
@@ -66,6 +76,6 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(port, '127.0.0.1', () => {
-  console.log('本地预览：' + origin);
+  console.log('AI 测试页：' + origin + '/demo/');
   console.log(live ? '已启用真实 DeepSeek 请求。' : '模拟模式，演示口令：' + mockCode);
 });

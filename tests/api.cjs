@@ -1,6 +1,6 @@
 const assert = require('node:assert/strict');
 const http = require('node:http');
-const { createHandler } = require('./app.js');
+const { createHandler } = require('../cloud-function/app.js');
 let calls = 0;
 const server = http.createServer(createHandler({
   env: { DEEPSEEK_API_KEY: 'test-only-fake-key', DEMO_ACCESS_CODE: 'test-only-demo-code' },
