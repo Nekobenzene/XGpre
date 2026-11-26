@@ -28,7 +28,7 @@ node --env-file=.env scripts/dev.cjs --live
 
 | 要做的事 | 文件 |
 | --- | --- |
-| 做正式报告页 | [index.html](index.html) 和前端自己的资源目录。目前首页跳转到 AI 测试页，正式页面可以直接替换它 |
+| 做正式报告页 | [index.html](index.html) 和前端自己的资源目录。根地址直接展示报告页，正式前端完成前显示筹备页 |
 | 调试案例讲解、对话流程和测试界面 | [demo/index.html](demo/index.html) |
 | 改接口自测与本地模拟 | [tests/api.cjs](tests/api.cjs)、[scripts/dev.cjs](scripts/dev.cjs) |
 | 新增或编辑案例 | [案例目录](examples/index.json)和对应案例 JSON |

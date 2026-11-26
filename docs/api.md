@@ -7,7 +7,7 @@
 | 正式报告网页 | `D:/FDU/习概pre/XGpre` | `frontend-design` | 根目录 `index.html` 和前端资源 |
 | AI 交互与测试 | `D:/FDU/习概pre/XGpre-ai` | `ai-interaction` | `demo/index.html`、`tests/`、`scripts/dev.cjs`、`cloud-function/` |
 
-正式报告的排版、素材和页面导航在前端工作区完成。根目录 `index.html` 目前是临时跳转入口，前端可以用正式报告页替换它。`demo/index.html` 是单独的聊天测试页，供 AI 侧验证案例、口令和追问。
+正式报告的排版、素材和页面导航在前端工作区完成。根目录 `index.html` 直接显示报告内容，正式前端完成前显示筹备页。`demo/index.html` 是单独的聊天测试页，供 AI 侧验证案例、口令和追问。
 
 在另一台电脑上，前端协作者可以使用自己的克隆目录，从团队确认的共同基线创建前端分支。前端接入 AI 时通过下文的 `POST /chat` 联调。接口字段、鉴权方式或案例格式有变动时，两边先同步协议，再合入各自的改动。
 
