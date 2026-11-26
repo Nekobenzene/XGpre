@@ -10,17 +10,18 @@
   <style>
     :root {
       color-scheme: light;
-      --canvas: #f3f4f1;
+      --canvas: #f4f3ef;
       --surface: #ffffff;
-      --ink: #171a18;
-      --body: #3b423d;
-      --muted: #6c746e;
-      --line: #dcdfd8;
-      --line-soft: #e8eae4;
-      --accent: #17456f;
-      --accent-soft: #e8eef5;
-      --cta: #b3271f;
-      --cta-hover: #931e18;
+      --ink: #111214;
+      --body: #3a3b36;
+      --muted: #6c6b64;
+      --line: #d9d5ca;
+      --line-soft: #e7e4da;
+      --rule: #111214;
+      --accent: #17457f;
+      --accent-soft: #e6ecf4;
+      --cta: #c8102e;
+      --cta-hover: #a50d26;
       --sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans SC", "Noto Sans CJK SC", system-ui, sans-serif;
       --mono: ui-monospace, "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
       --wrap: 1180px;
@@ -82,171 +83,71 @@
     .nav-links a[aria-current="page"] { color: var(--accent); }
     .nav-links a[aria-current="page"]::after { content: ""; display: block; height: 1px; background: var(--accent); margin-top: 2px; }
 
-    /* 首页：暗场封面 + 画框 */
+    /* 首页：色块海报，硬边分隔 */
     .cover {
-      position: relative; overflow: hidden;
-      background: linear-gradient(180deg, #2a6296 0%, #17406a 44%, #0b2540 100%);
+      background: var(--canvas);
       min-height: calc(100dvh - 64px);
-      display: flex; align-items: center;
-      padding-block: clamp(16px, 3vw, 48px);
-    }
-    .cover::before {
-      content: ""; position: absolute; inset: 0; z-index: 0;
-      background:
-        radial-gradient(58% 46% at 50% 6%, rgba(255, 255, 255, .12), transparent 70%),
-        radial-gradient(70% 58% at 50% 108%, rgba(3, 12, 24, .5), transparent 72%);
-    }
-    .cover::after {
-      content: ""; position: absolute; inset: 0; z-index: 0;
-      background: radial-gradient(76% 66% at 50% 44%, transparent 44%, rgba(3, 12, 24, .4) 100%);
-    }
-    .cover > .wrap { position: relative; z-index: 1; }
-    .stage {
-      padding: 13px; border-radius: 24px;
-      background: linear-gradient(165deg, #2b3644, #10161d 55%, #080c11);
-      box-shadow:
-        0 54px 130px rgba(0, 0, 0, .62),
-        0 0 110px rgba(56, 132, 190, .22),
-        inset 0 1px 0 rgba(255, 255, 255, .22),
-        inset 0 0 0 1px rgba(255, 255, 255, .08);
-    }
-    .screen { position: relative; overflow: hidden; border-radius: 13px; background: #0a1420; isolation: isolate; }
-    .screen-wash {
-      position: absolute; inset: 0; z-index: 0;
-      background: url(assets/case-peace-1.jpg) center 34% / cover;
-      filter: blur(40px) saturate(1.15) brightness(.8);
-      opacity: .6;
-      -webkit-mask-image: linear-gradient(158deg, #000 0%, rgba(0, 0, 0, .58) 42%, transparent 76%);
-      mask-image: linear-gradient(158deg, #000 0%, rgba(0, 0, 0, .58) 42%, transparent 76%);
-    }
-    .screen::after {
-      content: ""; position: absolute; inset: 0; z-index: 0;
-      background: linear-gradient(118deg, rgba(10, 30, 52, .2) 0%, rgba(8, 22, 38, .58) 55%, rgba(4, 11, 20, .92) 100%);
-    }
-    .screen-in {
-      position: relative; z-index: 1;
-      padding: clamp(18px, 2.8vw, 38px);
-      min-height: clamp(470px, 62vh, 620px);
       display: flex; flex-direction: column;
     }
-    .screen-bar {
-      display: flex; align-items: center; justify-content: space-between; gap: 12px 20px; flex-wrap: wrap;
-      padding-bottom: clamp(14px, 2.2vw, 26px);
-      border-bottom: 1px solid rgba(255, 255, 255, .12);
-      font-size: .6875rem; letter-spacing: .12em; color: rgba(206, 226, 244, .6);
+    .cover .inner { width: min(var(--wrap), 100% - var(--gap) * 2); margin-inline: auto; }
+    .cover-top {
+      padding-block: clamp(26px, 4.4vw, 56px) clamp(22px, 3.4vw, 40px);
+      border-bottom: 4px solid var(--rule);
     }
-    .screen-bar .sb-left { display: flex; align-items: baseline; gap: 10px; }
-    .screen-bar .sb-mark { font-family: var(--mono); color: #f07568; letter-spacing: .06em; }
-    .screen-head {
-      flex: 1; display: flex; flex-direction: column; justify-content: center;
-      padding-block: clamp(22px, 3.6vw, 46px) clamp(20px, 3vw, 40px);
+    .eyebrow {
+      display: flex; align-items: center; gap: 12px; margin: 0 0 20px;
+      font-size: .75rem; letter-spacing: .16em; color: var(--cta);
     }
-    .screen-head .kicker { font-size: .79rem; letter-spacing: .14em; color: #f07568; }
-    .screen-head h1 {
-      margin-top: 14px;
-      color: #f7fafd;
-      font-size: clamp(2.2rem, 5vw, 3.9rem);
-      line-height: 1.06; letter-spacing: -.025em;
+    .eyebrow::before { content: ""; width: 26px; height: 2px; background: var(--cta); }
+    .cover h1 {
+      margin: 0; color: var(--ink);
+      font-size: clamp(2.3rem, 5.2vw, 4rem);
+      line-height: 1.03; letter-spacing: -.03em; font-weight: 800;
     }
-    .screen-head .lede { margin-top: 18px; color: rgba(212, 230, 246, .78); font-size: clamp(1rem, 1.2vw, 1.125rem); line-height: 1.85; }
+    .cover .lede { margin-top: 16px; max-width: 34em; font-size: 1rem; line-height: 1.85; color: var(--body); }
 
-    .doors {
-      position: relative; isolation: isolate; margin-top: auto;
-      display: grid; grid-template-columns: 1fr 1fr;
-      border: 1px solid rgba(255, 255, 255, .24);
-      border-radius: 12px; overflow: hidden;
+    .cover-grid {
+      position: relative; flex: 1;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4px;
+      background: var(--rule);
+      border-bottom: 4px solid var(--rule);
     }
-    /* 玻璃下方的底片：让模糊与折射有东西可折射 */
-    .doors::before {
-      content: ""; position: absolute; inset: -6%; z-index: -1;
-      background: url(assets/case-peace-1.jpg) center 58% / cover;
-      filter: blur(30px) saturate(1.2) brightness(.72);
-      opacity: .4;
+    .panel {
+      position: relative; display: flex; flex-direction: column;
+      padding: clamp(24px, 3.2vw, 44px) clamp(22px, 3vw, 40px);
+      color: #fff; text-decoration: none;
     }
-    .door {
-      position: relative; isolation: isolate;
-      display: block; padding: clamp(20px, 2.4vw, 30px) clamp(22px, 2.6vw, 34px);
-      color: #eaf2f9;
-      transition: background-color .3s ease, box-shadow .3s ease;
+    .panel--blue { background: #17457f; }
+    .panel--red { background: #c8102e; }
+    .panel:hover { filter: brightness(1.08); text-decoration: none; }
+    .panel:focus-visible { outline: 3px solid #fff; outline-offset: -8px; }
+    .panel-top { display: flex; align-items: baseline; gap: 14px; font-family: var(--mono); }
+    .panel-n { font-size: .8125rem; opacity: .82; }
+    .panel-k { font-family: var(--sans); font-size: 1.75rem; font-weight: 700; letter-spacing: .12em; }
+    .panel h2 { margin-top: clamp(18px, 2.6vw, 32px); }
+    .panel-foot { margin-top: auto; }
+    .panel h2 { color: #fff; font-size: clamp(2.2rem, 4vw, 3.4rem); line-height: 1.05; letter-spacing: -.02em; }
+    .panel p { margin-top: 18px; max-width: 34em; font-size: .9375rem; line-height: 1.8; color: rgba(255, 255, 255, .88); }
+    .panel-go {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      margin-top: auto; padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, .45);
+      font-size: .8125rem; letter-spacing: .14em;
     }
-    /* 液态玻璃：高透、亮边、强折射 */
-    .door--liquid {
-      background: linear-gradient(158deg, rgba(226, 240, 250, .18), rgba(198, 220, 238, .07) 46%, rgba(170, 200, 226, .04));
-      backdrop-filter: blur(18px) saturate(1.5) brightness(1.04);
-      -webkit-backdrop-filter: blur(18px) saturate(1.5) brightness(1.04);
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, .55),
-        inset 0 -1px 0 rgba(255, 255, 255, .1),
-        inset 1px 0 0 rgba(255, 255, 255, .16);
-    }
-    /* 凝态玻璃：蓝染色、更厚、内发光 */
-    .door--frozen {
-      background: linear-gradient(158deg, rgba(58, 132, 196, .28), rgba(24, 64, 106, .2) 52%, rgba(12, 34, 60, .14));
-      backdrop-filter: blur(28px) saturate(1.8);
-      -webkit-backdrop-filter: blur(28px) saturate(1.8);
-      box-shadow:
-        inset 0 1px 0 rgba(214, 236, 252, .42),
-        inset 0 -1px 0 rgba(9, 30, 52, .5),
-        inset 0 0 30px rgba(130, 190, 240, .16);
-    }
-    .door::after {
-      content: ""; position: absolute; inset: 0; pointer-events: none;
-      background: linear-gradient(132deg, rgba(255, 255, 255, .2), rgba(255, 255, 255, .03) 36%, transparent 60%);
-      opacity: .65; transition: opacity .3s ease;
-    }
-    .door:hover::after { opacity: 1; }
-    .door:hover { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .62), inset 0 0 30px rgba(143, 184, 221, .2); }
-    .door:hover { text-decoration: none; }
-    .door + .door { border-left: 1px solid rgba(255, 255, 255, .22); }
-    .door-top { display: flex; align-items: baseline; gap: 12px; }
-    .door-n { font-family: var(--mono); font-size: .8125rem; color: #f07568; }
-    .door-k { font-size: 1.0625rem; letter-spacing: .22em; color: #f07568; }
-    .door h2 { margin-top: 6px; color: #fff; font-size: clamp(1.35rem, 2vw, 1.65rem); letter-spacing: 0; text-shadow: 0 1px 14px rgba(0, 0, 0, .45); }
-    .door p { margin-top: 8px; color: rgba(226, 240, 250, .82); font-size: clamp(.875rem, 1vw, .9375rem); line-height: 1.75; max-width: 32em; text-shadow: 0 1px 10px rgba(0, 0, 0, .45); }
-    .door-go { display: inline-block; margin-top: 14px; font-size: .8125rem; color: #f5b0a6; text-shadow: 0 1px 10px rgba(0, 0, 0, .4); }
-    .door-go::after { content: " →"; font-family: var(--mono); }
-    /* 霜态玻璃：乳白、低饱和、磨砂 */
+    .panel-go::after { content: "\2192"; font-family: var(--mono); letter-spacing: 0; }
+
     .clasp {
-      position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-      width: 50px; height: 50px; border-radius: 50%;
-      background: linear-gradient(160deg, rgba(248, 251, 254, .68), rgba(206, 224, 240, .4));
-      backdrop-filter: blur(12px) saturate(1.1);
-      -webkit-backdrop-filter: blur(12px) saturate(1.1);
-      border: 1px solid rgba(255, 255, 255, .64);
-      box-shadow:
-        0 8px 22px rgba(0, 0, 0, .4),
-        inset 0 1px 0 rgba(255, 255, 255, .85),
-        inset 0 -2px 6px rgba(120, 150, 180, .28);
+      position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 2;
+      width: 64px; height: 64px; border-radius: 50%;
+      background: var(--ink); border: 4px solid var(--canvas);
       display: grid; place-items: center;
     }
-    .clasp i {
-      position: absolute; width: 18px; height: 18px;
-      border: 1.5px solid #b3271f; border-radius: 50%;
-      transition: transform .35s cubic-bezier(.16, 1, .3, 1);
-    }
-    .clasp i:first-child { transform: translateX(-5px); }
-    .clasp i:last-child { transform: translateX(5px); opacity: .82; }
-    .doors:hover .clasp i:first-child { transform: translateX(-6px) rotate(-16deg); }
-    .doors:hover .clasp i:last-child { transform: translateX(6px) rotate(16deg); }
-    @media (min-width: 1025px) {
-      .door:first-child { padding-right: 44px; }
-      .door + .door { padding-left: 44px; }
-    }
-    .screen-foot {
-      margin-top: 16px; display: flex; justify-content: space-between; gap: 8px 20px; flex-wrap: wrap;
-      font-size: .6875rem; letter-spacing: .06em; color: rgba(206, 226, 244, .45);
-    }
-    .screen-foot q { font-style: normal; color: rgba(206, 226, 244, .62); }
+    .clasp i { position: absolute; width: 20px; height: 20px; border: 2px solid var(--canvas); border-radius: 50%; }
+    .clasp i:first-child { transform: translateX(-6px); }
+    .clasp i:last-child { transform: translateX(6px); }
 
-    /* 首页时导航并入暗场 */
-    body[data-view="home"] .nav { background: #2a6296; border-bottom-color: rgba(255, 255, 255, .12); }
-    body[data-view="home"] .brand { color: #f2f7fc; }
-    body[data-view="home"] .brand-mark { background: #f07568; color: #0b1a2b; }
-    body[data-view="home"] .brand-text em { color: rgba(226, 238, 250, .6); }
-    body[data-view="home"] .nav-links a { color: rgba(234, 242, 250, .82); }
-    body[data-view="home"] .nav-links a:hover { color: #fff; }
-    body[data-view="home"] .nav-links a[aria-current="page"] { color: #f7b3a8; }
-    body[data-view="home"] .nav-links a[aria-current="page"]::after { background: #f7b3a8; }
+    .cover-foot { padding-block: 14px 16px; font-size: .75rem; color: var(--muted); }
+    .cover-foot .inner { display: flex; justify-content: space-between; gap: 8px 24px; flex-wrap: wrap; }
 
     /* 视图通用 */
     .view { padding-block: clamp(30px, 4vw, 48px) clamp(48px, 6vw, 80px); }
@@ -343,26 +244,22 @@
     .credits ul { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 5px; }
     .credits li { line-height: 1.7; }
 
-    /* 投影常见 1366x768：压缩首屏，保证两张卡完整露出 */
-    @media (min-width: 861px) and (max-height: 820px) {
-      .cover { min-height: calc(100dvh - 64px); padding-block: 12px; }
-      .screen-in { min-height: min(556px, calc(100dvh - 150px)); padding: 16px 24px; }
-      .screen-bar { padding-bottom: 12px; }
-      .screen-head { padding-block: 16px 18px; }
-      .screen-head h1 { font-size: clamp(1.9rem, 3.4vw, 2.85rem); }
-      .screen-head .lede { margin-top: 12px; font-size: .9375rem; }
-      .screen-head .kicker { font-size: .6875rem; }
-      .door { padding: 14px 20px; }
-      .door p { font-size: .8125rem; }
-      .door-go { margin-top: 8px; }
-      .screen-foot { margin-top: 10px; }
+    /* 短屏（投影常见 1366x768）：压缩首屏，保证两块色板完整露出 */
+    @media (min-width: 1025px) and (max-height: 820px) {
+      .cover-top { padding-block: 22px 24px; }
+      .eyebrow { margin-bottom: 12px; }
+      .cover h1 { font-size: clamp(2rem, 4.2vw, 3.1rem); }
+      .cover .lede { margin-top: 10px; font-size: .9375rem; }
+      .panel { padding: 22px 26px; }
+      .panel h2 { font-size: clamp(1.7rem, 2.8vw, 2.4rem); }
+      .panel p { margin-top: 10px; font-size: .875rem; }
+      .panel-go { margin-top: 14px; padding-top: 10px; }
     }
 
     @media (max-width: 1024px) {
-      .doors { grid-template-columns: 1fr; }
-      .door + .door { border-left: 0; border-top: 1px solid rgba(255, 255, 255, .14); }
+      .cover-grid { grid-template-columns: 1fr; }
       .clasp { display: none; }
-      .cover { min-height: calc(100dvh - 58px); }
+      .panel { min-height: 240px; }
       .case-grid { grid-template-columns: 1fr; }
       .case-media { grid-template-columns: 1fr 1fr; gap: 16px; }
     }
@@ -374,16 +271,14 @@
       .nav-in { height: 58px; }
       .nav-links { gap: 16px; font-size: .875rem; }
       .brand-text { display: none; }
-      .cover { padding-block: 10px 16px; }
-      .stage { padding: 8px; border-radius: 16px; }
-      .screen { border-radius: 10px; }
-      .screen-in { min-height: 0; padding: 14px 14px 16px; }
-      .screen-bar { font-size: .625rem; padding-bottom: 12px; }
-      .screen-head { padding-block: 14px 16px; }
-      .screen-head h1 { font-size: 1.75rem; }
-      .screen-head .lede { font-size: .9375rem; }
-      .door { padding: 14px 16px; }
-      .screen-foot { font-size: .625rem; }
+      .cover-top { padding-block: 26px 24px; }
+      .eyebrow { gap: 0; font-size: .6875rem; letter-spacing: .12em; }
+      .eyebrow::before { display: none; }
+      .cover h1 { font-size: 2.1rem; }
+      .cover .lede { font-size: .9375rem; }
+      .panel { padding: 20px 20px 24px; min-height: 210px; }
+      .panel h2 { font-size: 1.8rem; }
+      .cover-foot { font-size: .6875rem; }
       .case-bar { gap: 12px; }
       .case-tabs a { padding: 7px 11px; }
       .case-count { display: none; }
@@ -420,44 +315,38 @@
     <!-- 首页 -->
     <section class="view view-cover" id="view-home">
       <div class="cover">
-        <div class="wrap">
-          <div class="stage">
-            <div class="screen">
-              <div class="screen-wash" aria-hidden="true"></div>
-              <div class="screen-in">
-                <div class="screen-bar">
-                  <span class="sb-left"><span class="sb-mark">XG</span><span>新时代国际援助中的中国身影</span></span>
-                  <span class="sb-right">2026 · 期末汇报</span>
-                </div>
+        <div class="cover-top">
+          <div class="inner">
+            <p class="eyebrow">习近平新时代中国特色社会主义思想概论 · 期末汇报</p>
+            <h1>中国式援助的知行合一</h1>
+            <p class="lede">理念回答为什么援，实践回答怎么援。三个理念，三个现场。</p>
+          </div>
+        </div>
 
-                <div class="screen-head">
-                  <p class="kicker">习近平新时代中国特色社会主义思想概论</p>
-                  <h1>中国式援助的知行合一</h1>
-                  <p class="lede">理念回答为什么援，实践回答怎么援。三个理念，三个现场。</p>
-                </div>
-
-                <div class="doors">
-                  <a class="door door--liquid" href="#/theory">
-                    <span class="door-top"><span class="door-n">01</span><span class="door-k">知</span></span>
-                    <h2>理念</h2>
-                    <p>人类命运共同体、真实亲诚与正确义利观、国际人道主义与生命至上。</p>
-                    <span class="door-go">三张卡片</span>
-                  </a>
-                  <a class="door door--frozen" href="#/practice/1">
-                    <span class="door-top"><span class="door-n">02</span><span class="door-k">行</span></span>
-                    <h2>实践</h2>
-                    <p>一针疫苗、一粒稻种、一顶蓝盔。三份公开报道。</p>
-                    <span class="door-go">三个案例</span>
-                  </a>
-                  <span class="clasp" aria-hidden="true"><i></i><i></i></span>
-                </div>
-
-                <div class="screen-foot">
-                  <q>知是行之始，行是知之成。</q>
-                  <span>王守仁《传习录》</span>
-                </div>
-              </div>
+        <div class="cover-grid">
+          <a class="panel panel--blue" href="#/theory">
+            <span class="panel-top"><span class="panel-n">01</span><span class="panel-k">知</span></span>
+            <h2>理念</h2>
+            <p>人类命运共同体、真实亲诚与正确义利观、人道主义与生命至上。</p>
+            <div class="panel-foot">
+              <span class="panel-go">三张卡片</span>
             </div>
+          </a>
+          <a class="panel panel--red" href="#/practice/1">
+            <span class="panel-top"><span class="panel-n">02</span><span class="panel-k">行</span></span>
+            <h2>实践</h2>
+            <p>一针疫苗、一粒稻种、一顶蓝盔。三份公开报道。</p>
+            <div class="panel-foot">
+              <span class="panel-go">三个案例</span>
+            </div>
+          </a>
+          <span class="clasp" aria-hidden="true"><i></i><i></i></span>
+        </div>
+
+        <div class="cover-foot">
+          <div class="inner">
+            <span>「知是行之始，行是知之成」王守仁《传习录》</span>
+            <span>XG · 2026</span>
           </div>
         </div>
       </div>
