@@ -112,7 +112,8 @@ const files = new Map([
   ['/interactive/chat.js', 'interactive/chat.js'],
   ['/interactive/ask/', 'interactive/ask/index.html'],
   ['/interactive/ask/index.html', 'interactive/ask/index.html'],
-  ['/examples/index.json', 'examples/index.json']
+  ['/examples/index.json', 'examples/index.json'],
+  ['/examples/article.css', 'examples/article.css']
 ]);
 const reportCredits = 'assets/credits.json';
 if (fs.existsSync(path.join(root, reportCredits))) {
@@ -131,9 +132,10 @@ for (const entry of index.cases) {
   }
   const file = 'examples/' + entry.file;
   files.set('/' + file, file);
-  const casePage = 'interactive/cases/' + entry.id + '/';
-  files.set('/' + casePage, casePage + 'index.html');
-  files.set('/' + casePage + 'index.html', casePage + 'index.html');
+  if (entry.page !== entry.id + '/index.html') throw new Error('案例网页路径无效，请先同步案例索引');
+  const casePage = 'examples/' + entry.page;
+  files.set('/examples/' + entry.id + '/', casePage);
+  files.set('/' + casePage, casePage);
   if (entry.media === entry.id + '/media.json') {
     const mediaFile = 'examples/' + entry.media;
     files.set('/' + mediaFile, mediaFile);
@@ -174,7 +176,7 @@ const server = http.createServer((req, res) => {
     };
     res.writeHead(200, { 'Content-Type': mimeTypes[path.extname(file)], 'Cache-Control': 'no-store' });
     const hint = cloud ? '腾讯云联调模式，请输入函数中设置的演示口令。' : '本地模拟口令：' + mockCode;
-    const chatPage = file === 'demo/index.html' || file === 'interactive/ask/index.html';
+    const chatPage = file === 'demo/index.html' || file === 'interactive/index.html';
     let body = !live && chatPage
       ? data.toString('utf8').replace('口令由页面所有者提供。', hint)
       : data;

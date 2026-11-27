@@ -7,7 +7,7 @@ flowchart LR
     SCF -->|"模型请求 + 服务端 API Key"| DeepSeek["DeepSeek API"]
 ```
 
-正式交互站位于 `/interactive/`。案例库和各案例详情由 `node scripts/build-interactive.cjs` 从 `examples/` 生成，详情地址为 `/interactive/cases/<id>/`。案例阅读只发起静态文件 GET 请求。`/demo/` 测试页从同一份 JSON 读取案例。问答初稿在 `/interactive/ask/`，模板和运行脚本分别为 `scripts/interactive-ask.html` 和 `interactive/chat.js`。
+正式交互站位于 `/interactive/`。案例瀑布和 AI 问答同页显示，宽屏并排，窄屏上下排列。卡片直接打开 `/examples/<id>/`，每篇正文和独有版式都写在对应案例目录的 `index.html`。案例阅读只发起静态文件 GET 请求。`/demo/` 测试页从同一份 JSON 读取案例。页内问答的锚点是 `/interactive/#ask`，模板和运行脚本分别为 `scripts/interactive-ask.html` 和 `interactive/chat.js`。原有问答地址会转到这个锚点。
 
 「AI 问答」发送事件讲解提示词、最近的问答和本次问题。选择内置案例不会影响问答。在本地 `--cloud` 模式中，转发程序先检索本地案例库，再用当前问题的事件关键词查询 Google 新闻。外部请求只发送关键词，检索结果提供标题、发布方、日期和原文入口。模型会在有明确匹配或用户要求列举多件事时直接回答。用户明显指单一事件、而几个候选同样吻合且会改变结论时，才追问确认。
 
@@ -20,13 +20,19 @@ flowchart LR
 ```text
 examples/
   index.json
+  article.css        # 文章页的共用排版基础
   <id>/
-    case.json
-    media.json
+    index.html        # 手写文章及本篇版式
+    case.json         # 卡片元数据、事实与出处
+    media.json        # 可选，登记图片和报道配图入口
     background.jpg    # 图名依案例而定
 ```
 
-`index.json` 使用 `schema_version: 2`。新增时，索引条目的 `id`、`title`、`tags`、`navigation` 与 `case.json` 一致。`file` 填 `<id>/case.json`，有配图时再填 `media` 为 `<id>/media.json`。这些路径相对 `examples/`。
+新增案例时，把 `index.html`、`case.json` 和可选图片放在新的 `examples/<id>/`，让 `case.json` 的 `id` 与目录名一致。文章可引用 `../article.css` 并写自己的局部样式。删除案例时移除整个对应目录。增删目录或修改卡片标题、封面后，在仓库根目录运行 `node scripts/build-interactive.cjs`。它扫描案例文件夹，刷新 `examples/index.json` 和入口卡片。既有案例保留排序，新目录排在后面。提交案例目录和更新后的索引、入口文件，再启动或重启本地服务。
+
+`index.json` 使用 `schema_version: 2`，索引自动登记 `file`（案例数据）、`page`（手写网页）和可选的 `media`（图片登记）。这些路径相对 `examples/`。
+
+案例页统一引用 `../article.css`。纸色、深蓝强调色、标题与正文、导航、图注、来源样式都在这里维护。`.article--narrow` 适合窄列叙事，`.article-note` 和 `.article-facts` 用于文中确有需要的补充材料或数字。每页的局部 CSS 负责分栏、照片位置和响应式排布。
 
 | 字段 | 内容 |
 | --- | --- |
@@ -42,7 +48,7 @@ examples/
 
 `source_ids` 指向同一文件中的 `sources[].id`，`fact_ids` 指向 `facts[].id`。确认报道区分了实际成果、计划和当事人表态。案例库随 Pages 公开发布。
 
-`media.json` 的 `images` 保存本地图片的 `file`、`caption`、`creator`、`license`、`license_url`、`source_url`、`width` 和 `height`。首图用作导航卡片封面，图片与 `case.json` 放在同一目录。`references` 保存原报道的配图入口，每条含 `label`、`source_id`、`source_url`。背景图需标明拍摄地点和报道事件的关系。
+`media.json` 的 `images` 保存本地图片的 `file`、`caption`、`creator`、`license`、`license_url`、`source_url`、`width` 和 `height`。登记文章页使用的全部图片，首图会用作卡片封面。图片与 `index.html` 放在同一目录，HTML 里用文件名引用。没有合适的照片时可省略 `media.json`，卡片只显示标题。`references` 保存原报道的配图入口，每条含 `label`、`source_id`、`source_url`。背景图需标明拍摄地点和报道事件的关系。
 
 ## 部署
 

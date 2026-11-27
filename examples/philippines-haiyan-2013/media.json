@@ -10,7 +10,35 @@
       "version": "Wikimedia Commons 960px 展示版",
       "width": 960,
       "height": 640
+    },
+    {
+      "file": "haiyan-landfall.jpg",
+      "caption": "2013年11月8日的卫星影像显示台风“海燕”横过菲律宾。",
+      "creator": "NASA / Jeff Schmaltz",
+      "license": "Public domain",
+      "license_url": "https://commons.wikimedia.org/wiki/File:Haiyan_Nov_8_2013_0510Z_Annotated.jpg",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Haiyan_Nov_8_2013_0510Z_Annotated.jpg",
+      "version": "Wikimedia Commons 下载版",
+      "width": 720,
+      "height": 720
+    },
+    {
+      "file": "haiyan-peak.png",
+      "caption": "2013年11月7日台风“海燕”在登陆前夕达到强度巅峰",
+      "creator": "NASA Terra MODIS / Nekobenzene",
+      "license": "Public domain",
+      "license_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MOD021KM/MOD021KM.A2013311.1345.061.2017305000523.hdf",
+      "source_url": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MOD021KM/MOD021KM.A2013311.1345.061.2017305000523.hdf",
+      "version": "据 NASA Terra MODIS 数据制作",
+      "width": 1100,
+      "height": 700
     }
   ],
-  "references": []
+  "references": [
+    {
+      "source_id": "S2",
+      "label": "查看 AFP 报道配图｜台风过后成片椰子树被折断",
+      "source_url": "https://www.manilatimes.net/2013/11/21/todays-headline-photos/top-stories/coconut-farmers-face-ruin-after-yolanda/54747"
+    }
+  ]
 }

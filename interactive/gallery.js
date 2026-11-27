@@ -4,22 +4,29 @@ const viewport = document.getElementById('gallery-window');
 const grid = document.getElementById('case-grid');
 const toggle = document.getElementById('gallery-mode');
 const cards = Array.from(grid.children);
-const narrow = matchMedia('(max-width: 680px)');
+const flowCards = cards.slice();
+for (let i = flowCards.length - 1; i > 0; i--) {
+  const j = Math.floor(Math.random() * (i + 1));
+  [flowCards[i], flowCards[j]] = [flowCards[j], flowCards[i]];
+}
+
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 let flowing = !reducedMotion.matches;
 
 function renderGallery() {
-  viewport.classList.toggle('is-flowing', flowing);
-  toggle.hidden = reducedMotion.matches;
-  toggle.textContent = flowing ? '查看全部' : '循环播放';
+  const count = 2;
+  const canFlow = !reducedMotion.matches && cards.length >= count * 5;
+  const animating = canFlow && flowing;
+  viewport.classList.toggle('is-flowing', animating);
+  toggle.hidden = !canFlow;
+  toggle.textContent = animating ? '查看全部' : '循环播放';
 
-  if (!flowing) {
+  if (!animating) {
     grid.replaceChildren(...cards);
     viewport.replaceChildren(grid);
     return;
   }
 
-  const count = narrow.matches ? 2 : 3;
   const columns = document.createElement('div');
   columns.className = 'gallery-columns';
   for (let i = 0; i < count; i++) {
@@ -29,13 +36,12 @@ function renderGallery() {
     track.className = 'gallery-track';
     const originals = document.createElement('ul');
     originals.setAttribute('aria-label', '案例列表第 ' + (i + 1) + ' 列');
-    originals.append(...cards.filter((_, index) => index % count === i));
+    originals.append(...flowCards.filter((_, index) => index % count === i));
     const copies = originals.cloneNode(true);
     copies.removeAttribute('aria-label');
     copies.setAttribute('aria-hidden', 'true');
     for (const link of copies.querySelectorAll('a')) {
       link.tabIndex = -1;
-      link.addEventListener('mousedown', event => event.preventDefault());
     }
     track.append(originals, copies);
     column.append(track);
@@ -50,14 +56,14 @@ toggle.addEventListener('click', () => {
 });
 
 viewport.addEventListener('focusin', event => {
-  if (!flowing || !(event.target instanceof HTMLAnchorElement) || event.target.tabIndex < 0) return;
+  if (!viewport.classList.contains('is-flowing') || !(event.target instanceof HTMLAnchorElement)
+    || event.target.tabIndex < 0 || !event.target.matches(':focus-visible')) return;
   const link = event.target;
   flowing = false;
   renderGallery();
   link.focus();
 });
 
-narrow.addEventListener('change', renderGallery);
 reducedMotion.addEventListener('change', () => {
   if (reducedMotion.matches) flowing = false;
   renderGallery();

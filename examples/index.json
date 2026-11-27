@@ -2,21 +2,6 @@
   "schema_version": 2,
   "cases": [
     {
-      "id": "philippines-haiyan-2013",
-      "title": "雨林里的搜寻与一条彩虹围巾",
-      "tags": [
-        "灾害救援",
-        "民间力量",
-        "跨国志愿协作"
-      ],
-      "navigation": {
-        "title": "彩虹围巾",
-        "subtitle": "夏飞和本杰明雨林寻亲"
-      },
-      "file": "philippines-haiyan-2013/case.json",
-      "media": "philippines-haiyan-2013/media.json"
-    },
-    {
       "id": "sierra-leone-ebola-2014",
       "title": "妮可出院前在病房里跳起了舞",
       "tags": [
@@ -29,6 +14,7 @@
         "subtitle": "妮可康复出院前的告别"
       },
       "file": "sierra-leone-ebola-2014/case.json",
+      "page": "sierra-leone-ebola-2014/index.html",
       "media": "sierra-leone-ebola-2014/media.json"
     },
     {
@@ -44,7 +30,24 @@
         "subtitle": "萨劳特接受汤加首例妇科腹腔镜"
       },
       "file": "tonga-laparoscopy-2025/case.json",
+      "page": "tonga-laparoscopy-2025/index.html",
       "media": "tonga-laparoscopy-2025/media.json"
+    },
+    {
+      "id": "philippines-haiyan-2013",
+      "title": "雨林里的搜寻与一条彩虹围巾",
+      "tags": [
+        "灾害救援",
+        "民间力量",
+        "跨国志愿协作"
+      ],
+      "navigation": {
+        "title": "彩虹围巾",
+        "subtitle": "夏飞和本杰明雨林寻亲"
+      },
+      "file": "philippines-haiyan-2013/case.json",
+      "page": "philippines-haiyan-2013/index.html",
+      "media": "philippines-haiyan-2013/media.json"
     },
     {
       "id": "turkiye-hatay-rescue-2023",
@@ -58,6 +61,7 @@
         "subtitle": "哈塔伊废墟里的联合营救"
       },
       "file": "turkiye-hatay-rescue-2023/case.json",
+      "page": "turkiye-hatay-rescue-2023/index.html",
       "media": "turkiye-hatay-rescue-2023/media.json"
     },
     {
@@ -72,6 +76,7 @@
         "subtitle": "加德满都四小时搜救"
       },
       "file": "nepal-kathmandu-rescue-2015/case.json",
+      "page": "nepal-kathmandu-rescue-2015/index.html",
       "media": "nepal-kathmandu-rescue-2015/media.json"
     },
     {
@@ -86,6 +91,7 @@
         "subtitle": "朱伟带队驰援莫桑比克"
       },
       "file": "mozambique-idai-medical-2019/case.json",
+      "page": "mozambique-idai-medical-2019/index.html",
       "media": "mozambique-idai-medical-2019/media.json"
     },
     {
@@ -100,6 +106,7 @@
         "subtitle": "刘兆强参与卸载援汤物资"
       },
       "file": "tonga-volcano-sealift-2022/case.json",
+      "page": "tonga-volcano-sealift-2022/index.html",
       "media": "tonga-volcano-sealift-2022/media.json"
     },
     {
@@ -114,6 +121,7 @@
         "subtitle": "中国救援队连夜赶赴曼德勒"
       },
       "file": "myanmar-mandalay-rescue-2025/case.json",
+      "page": "myanmar-mandalay-rescue-2025/index.html",
       "media": "myanmar-mandalay-rescue-2025/media.json"
     },
     {
@@ -128,6 +136,7 @@
         "subtitle": "萨塔拉的出院礼物"
       },
       "file": "laos-sathala-heart-2024/case.json",
+      "page": "laos-sathala-heart-2024/index.html",
       "media": "laos-sathala-heart-2024/media.json"
     },
     {
@@ -142,6 +151,7 @@
         "subtitle": "九十七岁老人握住医生"
       },
       "file": "cambodia-roskeal-eyecare-2017/case.json",
+      "page": "cambodia-roskeal-eyecare-2017/index.html",
       "media": "cambodia-roskeal-eyecare-2017/media.json"
     },
     {
@@ -156,6 +166,7 @@
         "subtitle": "斐济患者用中文感谢医生"
       },
       "file": "silkroad-ark-fiji-2025/case.json",
+      "page": "silkroad-ark-fiji-2025/index.html",
       "media": "silkroad-ark-fiji-2025/media.json"
     },
     {
@@ -170,6 +181,7 @@
         "subtitle": "孙爽带穴位模型援非"
       },
       "file": "zimbabwe-sunshuang-2020/case.json",
+      "page": "zimbabwe-sunshuang-2020/index.html",
       "media": "zimbabwe-sunshuang-2020/media.json"
     },
     {
@@ -184,6 +196,7 @@
         "subtitle": "高王军走进卡迪迪村义诊"
       },
       "file": "malawi-kadidi-clinic-2018/case.json",
+      "page": "malawi-kadidi-clinic-2018/index.html",
       "media": "malawi-kadidi-clinic-2018/media.json"
     },
     {
@@ -198,6 +211,7 @@
         "subtitle": "雷晓真和戴书明先后援突"
       },
       "file": "tunisia-medical-relay-2019/case.json",
+      "page": "tunisia-medical-relay-2019/index.html",
       "media": "tunisia-medical-relay-2019/media.json"
     },
     {
@@ -212,6 +226,7 @@
         "subtitle": "扎卡阿博里在戈罗卡试种"
       },
       "file": "png-goroka-juncao-2020/case.json",
+      "page": "png-goroka-juncao-2020/index.html",
       "media": "png-goroka-juncao-2020/media.json"
     },
     {
@@ -226,6 +241,7 @@
         "subtitle": "伯瑟德从学员到培训者"
       },
       "file": "rwanda-juncao-entrepreneur-2023/case.json",
+      "page": "rwanda-juncao-entrepreneur-2023/index.html",
       "media": "rwanda-juncao-entrepreneur-2023/media.json"
     },
     {
@@ -240,6 +256,7 @@
         "subtitle": "卡布卡布带姐妹种菌菇"
       },
       "file": "fiji-kabukabu-juncao-2019/case.json",
+      "page": "fiji-kabukabu-juncao-2019/index.html",
       "media": "fiji-kabukabu-juncao-2019/media.json"
     },
     {
@@ -254,6 +271,7 @@
         "subtitle": "约翰在林格四村种出新生计"
       },
       "file": "burundi-linge-rice-2018/case.json",
+      "page": "burundi-linge-rice-2018/index.html",
       "media": "burundi-linge-rice-2018/media.json"
     },
     {
@@ -268,6 +286,7 @@
         "subtitle": "安娜斯塔西娅学会省饲料"
       },
       "file": "uganda-anastasia-rice-fish-2024/case.json",
+      "page": "uganda-anastasia-rice-fish-2024/index.html",
       "media": "uganda-anastasia-rice-fish-2024/media.json"
     },
     {
@@ -282,6 +301,7 @@
         "subtitle": "恩东戈在村里看非洲杯"
       },
       "file": "cameroon-village-tv-2022/case.json",
+      "page": "cameroon-village-tv-2022/index.html",
       "media": "cameroon-village-tv-2022/media.json"
     }
   ]
