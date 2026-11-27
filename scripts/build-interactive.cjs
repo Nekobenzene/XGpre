@@ -10,7 +10,6 @@ const read = file => JSON.parse(fs.readFileSync(path.join(examples, file), 'utf8
 const escape = value => String(value ?? '').replace(/[&<>"']/g, ch => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
 })[ch]);
-const website = 'https://nekobenzene.github.io/XGpre/';
 const caseLink = id => 'cases/' + id + '/';
 const external = (url, label) => /^https?:\/\//i.test(url)
   ? `<a href="${escape(url)}" target="_blank" rel="noopener noreferrer">${escape(label)}</a>`
@@ -39,7 +38,7 @@ function page({ title, prefix = './', current, script = '', extraScript = '', bo
     <div class="wrap header-inner">
       <a class="brand" href="${prefix}">新时代国际援助</a>
       <nav aria-label="主导航">
-        <a href="${website}">讲稿</a>
+        <a href="${prefix}../">讲稿</a>
         <a href="${prefix}"${active('cases')}>案例库</a>
         <a href="${prefix}ask/"${active('ask')}>AI 问答</a>
       </nav>

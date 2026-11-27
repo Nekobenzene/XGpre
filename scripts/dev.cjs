@@ -114,6 +114,16 @@ const files = new Map([
   ['/interactive/ask/index.html', 'interactive/ask/index.html'],
   ['/examples/index.json', 'examples/index.json']
 ]);
+const reportCredits = 'assets/credits.json';
+if (fs.existsSync(path.join(root, reportCredits))) {
+  files.set('/' + reportCredits, reportCredits);
+  const credits = JSON.parse(fs.readFileSync(path.join(root, reportCredits), 'utf8'));
+  for (const filename of Object.keys(credits)) {
+    if (!/^[a-z0-9-]+\.(?:jpg|png|webp)$/.test(filename)) continue;
+    const asset = 'assets/' + filename;
+    files.set('/' + asset, asset);
+  }
+}
 const index = JSON.parse(fs.readFileSync(path.join(root, 'examples', 'index.json'), 'utf8'));
 for (const entry of index.cases) {
   if (!/^[a-z0-9-]+$/.test(entry.id) || entry.file !== entry.id + '/case.json') {
