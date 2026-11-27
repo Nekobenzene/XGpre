@@ -102,6 +102,7 @@ async function relayCloudChat(req, res) {
 const files = new Map([
   ['/', 'index.html'],
   ['/index.html', 'index.html'],
+  ['/site-navigation.css', 'site-navigation.css'],
   ['/demo/', 'demo/index.html'],
   ['/demo/index.html', 'demo/index.html'],
   ['/demo/vendor/markdown-it.min.js', 'demo/vendor/markdown-it.min.js'],

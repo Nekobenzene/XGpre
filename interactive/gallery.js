@@ -13,6 +13,17 @@ for (let i = flowCards.length - 1; i > 0; i--) {
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 let flowing = !reducedMotion.matches;
 
+const navigation = document.querySelectorAll('[data-interactive-nav]');
+function updateNavigation() {
+  const current = location.hash === '#ask' ? '#ask' : '#cases';
+  for (const link of navigation) {
+    if (link.hash === current) link.setAttribute('aria-current', 'location');
+    else link.removeAttribute('aria-current');
+  }
+}
+window.addEventListener('hashchange', updateNavigation);
+updateNavigation();
+
 function renderGallery() {
   const count = 2;
   const canFlow = !reducedMotion.matches && cards.length >= count * 5;

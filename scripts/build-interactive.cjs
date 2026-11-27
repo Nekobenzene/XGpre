@@ -22,6 +22,7 @@ function page(body) {
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="${csp}">
   <title>案例与问答 · 新时代国际援助</title>
+  <link rel="stylesheet" href="../site-navigation.css">
   <link rel="stylesheet" href="site.css">
   <script defer src="../demo/vendor/markdown-it.min.js"></script>
   <script defer src="gallery.js"></script>
@@ -29,13 +30,16 @@ function page(body) {
 </head>
 <body>
   <a class="skip" href="#main">跳到主要内容</a>
-  <header class="site-header">
-    <div class="wrap header-inner">
-      <a class="brand" href="./">新时代国际援助</a>
-      <nav aria-label="主导航">
+  <header class="project-header">
+    <div class="project-header-inner">
+      <a class="project-brand" href="../">新时代国际援助</a>
+      <nav class="project-sections" aria-label="项目分区">
         <a href="../">讲稿</a>
-        <a href="#cases">案例库</a>
-        <a href="#ask">AI 问答</a>
+        <a href="#cases" aria-current="page">互动</a>
+      </nav>
+      <nav class="project-local" aria-label="互动目录">
+        <a href="#cases" data-interactive-nav aria-current="location">案例库</a>
+        <a href="#ask" data-interactive-nav>AI 问答</a>
       </nav>
     </div>
   </header>
@@ -119,7 +123,7 @@ function dimensions(image) {
 }
 
 const ask = fs.readFileSync(path.join(__dirname, 'interactive-ask.html'), 'utf8');
-write('index.html', page(`<main id="main" class="wrap interactive-layout">
+write('index.html', page(`<main id="main" class="wrap interactive-layout" tabindex="-1">
   ${gallery}
   ${ask.trim()}
 </main>`));
